@@ -1,0 +1,2 @@
+# spaceone-initializer
+SpaceONE initializer
