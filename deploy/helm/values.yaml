@@ -1,0 +1,35 @@
+###############################
+# DEFAULT 
+###############################
+enabled: true
+image:
+    name: spaceone/spacectl
+    version: latest
+imagePullPolicy: IfNotPresent
+
+global:
+  namespace: spaceone
+
+main:
+  import:
+    - apply/root_domain.yaml
+    - apply/repository.yaml
+      #  - register_plugins.yaml
+    - apply/marketplace.yaml
+      #  - schema.yaml
+      #  - monitoring.yaml
+    - apply/statistics.yaml
+    - apply/monitoring_from_marketplace.yaml
+      #- plugin_endpoint.yaml
+
+  var:
+    domain_name: root
+    domain_owner:
+      id: admin
+      password: AdministratoR1
+    user:
+      id: root_api_key
+    marketplace_token: ____PUT_MARKET_PLACE_TOKEN_HERE_____________
+    domain_policy_id: policy-0386cce2730b
+    project_policy_id: policy-0386cce2730b
+  tasks: []
