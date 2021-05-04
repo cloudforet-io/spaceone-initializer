@@ -29,8 +29,8 @@ global:
 #    - /root/spacectl/apply/marketplace.yaml
 #      #  - /root/spacectl/apply/schema.yaml            # for Developer
 #      #  - /root/spacectl/apply/monitoring.yaml        # for Developer
-#    - /root/spacectl/apply/statistics.yaml
-#    - /root/spacectl/apply/monitoring_from_marketplace.yaml
+#      #  - /root/spacectl/apply/statistics.yaml
+#      #  - /root/spacectl/apply/monitoring_from_marketplace.yaml
 #      #- /root/spacectl/apply/plugin_endpoint.yaml     # for Developer
 #
 #  var:
@@ -41,8 +41,15 @@ global:
 #    user:
 #      id: root_api_key
 #    marketplace_token: ____PUT_MARKET_PLACE_TOKEN_HERE_____________
+#    marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
 #    domain_policy_id: policy-0386cce2730b
 #    project_policy_id: policy-0386cce2730b
+#
+#    # for developer
+#    marketplace_endpoint: grpc://repository.portal.dev.spaceone.dev:50051
+#    domain_policy_id: policy-91312542f76c
+#    project_policy_id: policy-91312542f76c
+#
 #  tasks: []
 
 
