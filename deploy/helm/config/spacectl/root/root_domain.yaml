@@ -138,4 +138,4 @@ tasks:
     uses: "@modules/shell"
     spec:
       run: |
-          curl -X PUT http://consul:8500/v1/kv/debug/supervisor/TOKEN -d '${{ tasks.admin_user_api_key.output.api_key }}'
+          curl -X PUT http://${{ var.consul_server }}:8500/v1/kv/root/api_key/TOKEN -d '${{ tasks.admin_user_api_key.output.api_key }}'

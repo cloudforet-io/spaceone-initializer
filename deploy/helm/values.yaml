@@ -10,6 +10,9 @@ imagePullPolicy: IfNotPresent
 global:
   namespace: spaceone
 
+skip_health_check: false
+consul_server: spaceone-consul-server
+
 #############################################################
 # WARNING
 # enable domain: root (only one-time during installation)

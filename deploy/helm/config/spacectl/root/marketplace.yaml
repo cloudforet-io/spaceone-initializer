@@ -23,7 +23,7 @@ tasks:
         domain_id: ${{ tasks.domain.output.domain_id }}
         name: Official Marketplace 
         repository_type: remote
-        endpoint: ${{ tasks.marketplace_endpoint }}
+        endpoint: ${{ var.marketplace_endpoint }}
         version: v1
         secret_id: ${{ tasks.marketplace_token.output.secret_id }}
       mode: EXEC

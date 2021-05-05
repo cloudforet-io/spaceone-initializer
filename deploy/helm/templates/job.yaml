@@ -20,7 +20,7 @@ spec:
       initContainers:
         - name: job-0-msa-health-check
           image: networld/grpcurl
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           # runs for 15 seconds; echoes job name and timestamp
           command:
             - sh
@@ -30,6 +30,10 @@ spec:
               while true;
               do
 
+{{ if .Values.skip_health_check }}
+                echo "Skip Health Check"
+                break
+{{ end }}
                 echo GRPC HealthCheck for microservices
 
                 ! grpcurl -plaintext config:50051 spaceone.api.core.v1.ServerInfo/get_version;
