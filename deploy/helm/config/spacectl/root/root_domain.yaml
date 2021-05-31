@@ -134,7 +134,7 @@ tasks:
         spacectl config set api_key ${{ tasks.admin_user_api_key.output.api_key }}
 
 
-  - name: Consul Supervisor API Key
+  - name: Consul Admin API Key
     uses: "@modules/shell"
     spec:
       run: |
