@@ -1,0 +1,59 @@
+tasks:
+  - name: Create Domain Admin Policy
+    id: domain_admin_policy
+    uses: "modules/resource"
+    spec:
+      resource_type: identity.Policy
+      data:
+        name: "Domain Full Acess"
+        permissions:
+          - "*"
+        domain_id: ${{ tasks.domain.output.domain_id }}
+      mode: EXEC
+      verb:
+        exec: create
+
+  - name: Create Domain Admin Role
+    id: domain_admin_role
+    uses: "modules/resource"
+    spec:
+      resource_type: identity.Role
+      data:
+        name: "Domain Admin"
+        role_type: DOMAIN
+        policies:
+          - policy_type: CUSTOM
+            policy_id: ${{ tasks.domain_admin_policy.output.policy_id }}
+        domain_id: ${{ tasks.domain.output.domain_id }}
+      mode: EXEC
+      verb:
+        exec: create
+
+  - name: Create admin user
+    id: admin_user
+    uses: "@modules/resource"
+    spec:
+      resource_type: identity.User
+      data:
+        user_id: ${{ var.username }}
+        password: ${{ var.password }}
+        domain_id: ${{ tasks.domain.output.domain_id }}
+        backend: LOCAL
+      matches:
+        - user_id
+        - domain_id
+
+  - name: Domain Admin Role Binding
+    id: domain_admin_role_binding
+    uses: "modules/resource"
+    spec:
+      resource_type: identity.RoleBinding
+      data:
+        resource_type: identity.User
+        resource_id: ${{ var.username }}
+        role_id: ${{ tasks.domain_admin_role.output.role_id }}
+        domain_id: ${{ tasks.domain.output.domain_id }}
+      mode: EXEC
+      verb:
+        exec: create
+

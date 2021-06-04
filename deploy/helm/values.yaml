@@ -26,10 +26,12 @@ skip_health_check: false
 #main:
 #  import:
 #    - /root/spacectl/apply/root_domain.yaml
+#      #  - /root/spacectl/apply/domain_role.yaml            # for Developer
+#      #  - /root/spacectl/apply/project_role.yaml            # for Developer
 #    - /root/spacectl/apply/repository.yaml
+#      #  - /root/spacectl/apply/schema.yaml            # for Developer
 #      #  - /root/spacectl/apply/register_plugins.yaml  # for Developer
 #    - /root/spacectl/apply/marketplace.yaml
-#      #  - /root/spacectl/apply/schema.yaml            # for Developer
 #      #  - /root/spacectl/apply/monitoring.yaml        # for Developer
 #      #  - /root/spacectl/apply/statistics.yaml
 #      #  - /root/spacectl/apply/monitoring_from_marketplace.yaml
@@ -43,6 +45,8 @@ skip_health_check: false
 #    user:
 #      id: root_api_key
 #    consul_server: spaceone-consul-server
+#    username: user1@example.com
+#    password: User1234!
 #
 #    # for production environment
 #    marketplace_token: ____PUT_MARKET_PLACE_TOKEN_HERE_____________

@@ -1,0 +1,31 @@
+tasks:
+  - name: Create Project Policy
+    id: project_policy
+    uses: "modules/resource"
+    spec:
+      resource_type: identity.Policy
+      data:
+        name: "Project Full Acess"
+        permissions:
+          - "*"
+        domain_id: ${{ tasks.domain.output.domain_id }}
+      mode: EXEC
+      verb:
+        exec: create
+
+  - name: Create Project Role
+    id: project_role
+    uses: "modules/resource"
+    spec:
+      resource_type: identity.Role
+      data:
+        name: "Project Admin"
+        role_type: PROJECT
+        policies:
+          - policy_type: CUSTOM
+            policy_id: ${{ tasks.project_policy.output.policy_id }}
+        domain_id: ${{ tasks.domain.output.domain_id }}
+      mode: EXEC
+      verb:
+        exec: create
+
