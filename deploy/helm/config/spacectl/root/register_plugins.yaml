@@ -9,9 +9,9 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: google-oauth2
+        name: Google Oauth2 Auth Plugin
         service_type: identity.Domain
-        image: spaceone/googleoauth2
+        image: ${{ var.plugin_repo }}/googleoauth2
         labels: ['Authentication', 'Google OAuth2']
         template:
           options:
@@ -26,12 +26,44 @@ tasks:
             is_required: true
             example: OAuth 2.0 Client ID
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/google-icon.svg
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/google-icon.svg
           description: Google OAuth2 Authentication
           spaceone:plugin_name: google-oauth2
       mode: EXEC
       verb:
         exec: register
+
+  - name: Create Keycloak Auth Plugin
+    id: keycloak_auth_plugin
+    uses: "@modules/resource"
+    spec:
+      resource_type: repository.Plugin
+      data:
+        domain_id: ${{ tasks.domain.output.domain_id }}
+        name: KeyCloak OIDC Auth Plugin
+        service_type: identity.Domain
+        image: ${{ var.plugin_repo }}/plugin-keycloak-oidc
+        labels: ['Authentication', 'Keycloak', 'oidc']
+        template:
+          options:
+          - key: openid-configuration
+            name: Open ID configuration URL
+            type: str
+            is_required: true
+            example: https://<sso domain>/auth/realms/<your domain>/.well-known/openid-configuration
+          - key: auth_type
+            name: Authentication Type
+            type: str
+            is_required: true
+            example: keycloak_oidc
+        tags:
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/keycloak.svg
+          description: Keycloak OAuth Authentication
+          spaceone:plugin_name: plugin-keycloak-oidc
+      mode: EXEC
+      verb:
+        exec: register
+
 
 ###########################
 # AWS plugin
@@ -43,15 +75,15 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: aws-ec2
+        name: AWS EC2 collector plugin
         service_type: inventory.Collector
-        image: spaceone/aws-ec2
+        image: ${{ var.plugin_repo }}/aws-ec2
         labels: ['Server', 'EC2']
         provider: 'aws'
         capability:
           supported_schema: ['aws_access_key', 'aws_assume_role']
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-ec2.svg
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-ec2.svg
           description: AWS EC2 Compute collector
           spaceone:plugin_name: aws-ec2
       mode: EXEC
@@ -65,9 +97,9 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: aws-cloud-services
+        name: AWS Cloud-services collector plugin
         service_type: inventory.Collector
-        image: spaceone/aws-cloud-services
+        image: ${{ var.plugin_repo }}/aws-cloud-services
         labels: ['DynamoDB', 'S3', 'ElastiCache', 'AutoScaling Group', 'DirectConnector', 'RDS', 'DocumentDB',
                  'EKS', 'Redshift', 'EFS', 'ECS', 'Workspace', 'API Gateway', 'Route53',
                  'SQS', 'ECR', 'CloudTrail', 'SNS', 'SecretManager', 'AmazonAthena', 'KMS', 'Kinesis']
@@ -75,7 +107,7 @@ tasks:
         capability:
           supported_schema: ['aws_access_key', 'aws_assume_role']
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-cloudservice.svg
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-cloudservice.svg
           description: AWS Cloud Services collector
           spaceone:plugin_name: aws-cloud-services
       mode: EXEC
@@ -89,15 +121,15 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: aws-trusted-advisor
+        name: AWS Trusted-advisor collector plugin
         service_type: inventory.Collector
-        image: spaceone/aws-trusted-advisor
+        image: ${{ var.plugin_repo }}/aws-trusted-advisor
         labels: ['Support', 'Trusted Advisor']
         provider: 'aws'
         capability:
           supported_schema: ['aws_access_key', 'aws_assume_role']
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-trusted-advisor.png
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-trusted-advisor.png
           description: AWS Trusted Advisor collector
           spaceone:plugin_name: aws-trusted-advisor
       mode: EXEC
@@ -111,9 +143,9 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: aws-cloud-watch
+        name: AWS cloud-watch monitoring plugin
         service_type: monitoring.DataSource
-        image: spaceone/aws-cloudwatch
+        image: ${{ var.plugin_repo }}/aws-cloudwatch
         labels: ['Monitoring', 'AWS', 'CloudWatch']
         provider: 'aws'
         capability:
@@ -121,7 +153,7 @@ tasks:
           use_resource_secret: true
           monitoring_type: METRIC
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-cloudwatch.svg
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-cloudwatch.svg
           description: AWS Cloud Watch Monitoring Plugin
           spaceone:plugin_name: aws-cloud-watch
       mode: EXEC
@@ -135,9 +167,9 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: aws-health
-        service_type: monitoring.DataSource
-        image: spaceone/aws-health
+        name: AWS health collector plugin
+        service_type: inventory.Collector
+        image: ${{ var.plugin_repo }}/aws-health
         labels: ['Monitoring', 'AWS', 'Personal_Health_Dashboard']
         provider: 'aws'
         capability:
@@ -145,7 +177,7 @@ tasks:
           use_resource_secret: true
           monitoring_type: LOG
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-phd.svg
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-phd.svg
           description: AWS Personal Health Dashboard Monitoring Plugin
           spaceone:plugin_name: aws-health
       mode: EXEC
@@ -162,15 +194,15 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: google-cloud-compute
+        name: Google-cloud compute collector plugin
         service_type: inventory.Collector
-        image: spaceone/gcp-compute
+        image: ${{ var.plugin_repo }}/gcp-compute
         labels: ['Server', 'Compute']
         provider: 'google_cloud'
         capability:
           supported_schema: ['google_oauth2_credentials']
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/gcp-compute.svg
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/gcp-compute.svg
           description: Google Cloud Compute collector
           spaceone:plugin_name: google-cloud-compute
       mode: EXEC
@@ -184,15 +216,15 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: google-cloud-services
+        name: Google cloud-services collector plugin
         service_type: inventory.Collector
-        image: spaceone/google-cloud-services
+        image: ${{ var.plugin_repo }}/google-cloud-services
         labels: ['Cloud SQL', 'Instance Group', 'Instance Templates', 'Machine Images']
         provider: 'google_cloud'
         capability:
           supported_schema: ['google_oauth2_credentials']
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/gcp-cloudservice.png
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/gcp-cloudservice.png
           description: Google Cloud Services collector
           spaceone:plugin_name: google-cloud-services
       mode: EXEC
@@ -206,9 +238,9 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: google-cloud-stackdriver
+        name: Google-cloud stackdriver monitoring plugin
         service_type: monitoring.DataSource
-        image: spaceone/google-cloud-stackdriver
+        image: ${{ var.plugin_repo }}/google-cloud-stackdriver
         labels: ['Monitoring', 'Google Cloud', 'Stackdriver', 'Operations Suite']
         provider: 'google_cloud'
         capability:
@@ -216,7 +248,7 @@ tasks:
           use_resource_secret: true
           monitoring_type: METRIC
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/google-cloud-stackdriver.svg
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/google-cloud-stackdriver.svg
           description: Google Cloud Stackdriver Monitoring Plugin
           spaceone:plugin_name: google-cloud-stackdriver
       mode: EXEC
@@ -234,15 +266,15 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: azure-vm
+        name: Azure VM collector plugin
         service_type: inventory.Collector
-        image: spaceone/azure-vm
+        image: ${{ var.plugin_repo }}/azure-vm
         labels: ['Server', 'VM']
         provider: 'azure'
         capability:
           supported_schema: ['azure_client_secret']
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/azure-vm.svg
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/azure-vm.svg
           description: Azure VM collector
           spaceone:plugin_name: azure-vm
       mode: EXEC
@@ -259,15 +291,15 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: aws-power-controller
+        name: AWS power-scheduler controller plugin
         service_type: power_scheduler.Controller
-        image: spaceone/aws-power-controller
+        image: ${{ var.plugin_repo }}/aws-power-controller
         labels: ['Server', 'RDS', 'Auto Scaling Group', 'Power Scheduler']
         provider: 'aws'
         capability:
           supported_schema: ['aws_access_key', 'aws_assume_role']
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-ec2.svg
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-ec2.svg
           description: AWS Power Controller
           spaceone:plugin_name: aws-power-controller
       mode: EXEC
@@ -281,15 +313,15 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: google-cloud-power-controller
+        name: Google-cloud power-controller controller plugin
         service_type: power_scheduler.Controller
-        image: spaceone/google-cloud-power-controller
+        image: ${{ var.plugin_repo }}/google-cloud-power-controller
         labels: ['Server', 'Instance Group', 'Power Scheduler']
         provider: 'google_cloud'
         capability:
           supported_schema: ['google_oauth2_credentials']
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/google-icon.svg
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/google-icon.svg
           description: Google Cloud Power Controller
           spaceone:plugin_name: google-cloud-power-controller
       mode: EXEC
@@ -303,15 +335,15 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: aws-power-state
+        name: AWS power-state collector plugin
         service_type: inventory.Collector
-        image: spaceone/aws-power-state
+        image: ${{ var.plugin_repo }}/aws-power-state
         labels: ['EC2', 'Auto Scaling Group', 'RDS', 'Power Scheduler']
         provider: 'aws'
         capability:
           supported_schema: ['aws_access_key', 'aws_assume_role']
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-ec2.svg
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-ec2.svg
           description: AWS Power State collector
           spaceone:plugin_name: aws-power-state
       mode: EXEC
@@ -325,15 +357,15 @@ tasks:
       resource_type: repository.Plugin
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: google-cloud-power-state
+        name: Google-cloud power-state collector plugin
         service_type: inventory.Collector
-        image: spaceone/google-cloud-power-state
+        image: ${{ var.plugin_repo }}/google-cloud-power-state
         labels: ['Server', 'Compute']
         provider: 'google_cloud'
         capability:
           supported_schema: ['google_oauth2_credentials']
         tags:
-          icon: https://assets-console-spaceone-stg.s3.ap-northeast-2.amazonaws.com/console-assets/icons/gcp-compute.svg
+          icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/gcp-compute.svg
           description: Google Cloud Power State collector
           spaceone:plugin_name: google-cloud-power-state
       mode: EXEC

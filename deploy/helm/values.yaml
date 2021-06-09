@@ -56,10 +56,11 @@ skip_health_check: false
 #
 #    # for developer environment
 #    marketplace_token: ____PUT_MARKET_PLACE_TOKEN_HERE_____________
-#    marketplace_endpoint: grpc://repository.portal.dev.spaceone.dev:50051
+#    marketplace_endpoint: grpc+ssl://repository.portal.dev.spaceone.dev:443
 #    domain_policy_id: policy-91312542f76c
 #    project_policy_id: policy-91312542f76c
 #
+#    plugin_repo: spaceone    # pyengine for developer
 #  tasks: []
 
 
