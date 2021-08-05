@@ -76,7 +76,7 @@ tasks:
         domain_id: ${{ tasks.domain.output.domain_id }}
       mode: EXEC
       verb:
-        exec: creat
+        exec: create
 
   - name: Create admin user
     id: admin_user
