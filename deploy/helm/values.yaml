@@ -98,7 +98,7 @@ skip_health_check: false
 #      google_cloud_stackdriver_plugin_version: "1.0.3"
 #      azure_monitor_plugin_id: plugin-c6c14566298c
 #      azure_monitor_plugin_id_plugin_version: "1.0"
-#      aws_hyperbilling_plugin_id: plugin-38b368c8e27e
+#      aws_hyperbilling_plugin_id: plugin-aws-hyperbilling-bill-datasource
 #      aws_hyperbilling_version: "1.0.2"
 #
 #    tasks: []
