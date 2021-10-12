@@ -1,19 +1,4 @@
 tasks:
-  - name: Create Marketplace Token
-    id: marketplace_token
-    uses: "@modules/resource"
-    spec:
-      resource_type: secret.Secret
-      data:
-        domain_id: ${{ tasks.domain.output.domain_id }}
-        name: marketplace-token
-        secret_type: CREDENTIALS
-        data: 
-          token: ${{ var.marketplace_token }}
-      mode: EXEC
-      verb:
-        exec: create
-
   - name: Create Marketplace Repository
     id: marketplace
     uses: "@modules/resource"
@@ -24,8 +9,6 @@ tasks:
         name: Official Marketplace 
         repository_type: remote
         endpoint: ${{ var.marketplace_endpoint }}
-        version: v1
-        secret_id: ${{ tasks.marketplace_token.output.secret_id }}
       mode: EXEC
       verb:
         exec: register
