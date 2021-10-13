@@ -48,35 +48,6 @@ tasks:
       run: |
         spacectl config set api_key ${{ tasks.domain_owner_token.output.access_token }}
 
-  - name: Create admin user
-    id: admin_user
-    uses: "@modules/resource"
-    spec:
-      resource_type: identity.User
-      data:
-        user_id: ${{ var.username }}
-        password: ${{ var.password }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
-        backend: LOCAL
-      matches:
-        - user_id
-        - domain_id
-
-  - name: Create admin user API(Domain) key
-    id: admin_user_api_key
-    uses: "@modules/resource"
-    spec:
-      resource_type: identity.APIKey
-      data:
-        user_id: ${{ tasks.admin_user.output.user_id }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
-      matches:
-        - user_id
-        - domain_id
-      mode: EXEC
-      verb:
-        exec: create
-
   - name: Create project admin role
     id: project_admin_role
     uses: "@modules/resource"
@@ -104,20 +75,6 @@ tasks:
         policies:
           - policy_type: ${{ var.domain_admin_policy_type }}
             policy_id: ${{ var.domain_admin_policy_id }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
-      mode: EXEC
-      verb:
-        exec: create
-
-  - name: Domain Admin Role Binding
-    id: domain_admin_role_binding
-    uses: "modules/resource"
-    spec:
-      resource_type: identity.RoleBinding
-      data:
-        resource_type: identity.User
-        resource_id: ${{ var.username }}
-        role_id: ${{ tasks.domain_admin_role.output.role_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
       mode: EXEC
       verb:
