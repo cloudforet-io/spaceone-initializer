@@ -6,7 +6,7 @@ tasks:
       resource_type: repository.Repository
       data:
         domain_id: ${{ tasks.domain.output.domain_id }}
-        name: Official Marketplace 
+        name: Marketplace 
         repository_type: remote
         endpoint: ${{ var.marketplace_endpoint }}
       mode: EXEC
