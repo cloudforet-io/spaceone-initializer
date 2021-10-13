@@ -12,37 +12,3 @@ tasks:
       mode: EXEC
       verb:
         exec: register
-
-  - name: Create Domain Admin Role
-    id: domain_admin_role
-    uses: "modules/resource"
-    spec:
-      resource_type: identity.Role
-      data:
-        name: "Domain Admin"
-        role_type: DOMAIN
-        policies:
-          - policy_type: MANAGED
-            policy_id: ${{ var.domain_policy_id }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
-      mode: EXEC
-      verb:
-        exec: create
-
-  - name: Create Project Admin Role
-    id: project_admin_role
-    uses: "modules/resource"
-    spec:
-      resource_type: identity.Role
-      data:
-        name: "Project Admin"
-        role_type: PROJECT
-        policies:
-          - policy_type: MANAGED
-            policy_id: ${{ var.project_policy_id }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
-      mode: EXEC
-      verb:
-        exec: create
-
-
