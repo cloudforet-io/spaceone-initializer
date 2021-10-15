@@ -18,4 +18,6 @@ data:
       repository: grpc://repository:50051
       secret: grpc://secret:50051
       statistics: grpc://statistics:50051
+      notification: grpc://notification:50051
+      billing: grpc://billing:50051
 {{ end }}
