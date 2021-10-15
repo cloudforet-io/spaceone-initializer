@@ -80,23 +80,23 @@ tasks:
       verb:
         exec: create
         
-  - name: List Notification protocol
+  - name: List Notification Protocol
     id: list_notification_protocol
     uses: "@modules/shell"
     spec:
       run: |
-        spacectl list Notification.protocol -p domain_id=${{ tasks.domain.output.domain_id }}
+        spacectl list notification.Protocol -p domain_id=${{ tasks.domain.output.domain_id }}
         
   - name: List Monitoring DataSource
     id: list_monitoring_datasource
     uses: "@modules/shell"
     spec:
       run: |
-        spacectl list Monitoring.DataSource -p domain_id=${{ tasks.domain.output.domain_id }}
+        spacectl list monitoring.DataSource -p domain_id=${{ tasks.domain.output.domain_id }}
         
   - name: List Billing DataSource
     id: list_billing_datasource
     uses: "@modules/shell"
     spec:
       run: |
-        spacectl list Billing.DataSource -p domain_id=${{ tasks.domain.output.domain_id }}
+        spacectl list billing.DataSource -p domain_id=${{ tasks.domain.output.domain_id }}
