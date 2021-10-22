@@ -26,16 +26,14 @@ skip_health_check: false
 #main:
 #  import:
 #    - /root/spacectl/apply/root_domain.yaml
-#      #  - /root/spacectl/apply/domain_role.yaml            # for Developer
-#      #  - /root/spacectl/apply/project_role.yaml            # for Developer
-#    - /root/spacectl/apply/repository.yaml
-#      #  - /root/spacectl/apply/schema.yaml            # for Developer
-#      #  - /root/spacectl/apply/register_plugins.yaml  # for Developer
 #    - /root/spacectl/apply/marketplace.yaml
-#      #  - /root/spacectl/apply/monitoring.yaml        # for Developer
-#      #  - /root/spacectl/apply/statistics.yaml
-#      #  - /root/spacectl/apply/monitoring_from_marketplace.yaml
-#      #- /root/spacectl/apply/plugin_endpoint.yaml     # for Developer
+#    #- /root/spacectl/apply/hyperbilling.yaml          # for Hyper billing
+#    #- /root/spacectl/apply/domain_role.yaml           # for Developer
+#    #- /root/spacectl/apply/project_role.yaml          # for Developer
+#    #- /root/spacectl/apply/schema.yaml                # for Developer
+#    #- /root/spacectl/apply/register_plugins.yaml      # for Developer
+#    #- /root/spacectl/apply/monitoring.yaml            # for Developer
+#    #- /root/spacectl/apply/plugin_endpoint.yaml       # for Developer
 #
 #  var:
 #    domain_name: root
@@ -45,22 +43,7 @@ skip_health_check: false
 #    user:
 #      id: root_api_key
 #    consul_server: spaceone-consul-server
-#    username: user1@example.com
-#    password: User1234!
-#
-#    # for production environment
-#    marketplace_token: ____PUT_MARKET_PLACE_TOKEN_HERE_____________
 #    marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
-#    domain_policy_id: policy-0386cce2730b
-#    project_policy_id: policy-0386cce2730b
-#
-#    # for developer environment
-#    marketplace_token: ____PUT_MARKET_PLACE_TOKEN_HERE_____________
-#    marketplace_endpoint: grpc+ssl://repository.portal.dev.spaceone.dev:443
-#    domain_policy_id: policy-91312542f76c
-#    project_policy_id: policy-91312542f76c
-#
-#    plugin_repo: spaceone    # pyengine for developer
 #  tasks: []
 
 
@@ -74,8 +57,6 @@ skip_health_check: false
 #main:
 #    import:
 #      - /root/spacectl/apply/local_domain.yaml
-##      - /root/spacectl/apply/oauth_domain.yaml
-#      - /root/spacectl/apply/monitoring.yaml
 #      - /root/spacectl/apply/statistics.yaml
 #
 #    var:
@@ -90,15 +71,5 @@ skip_health_check: false
 #      project_admin_policy_id: policy-0386cce2730b
 #      domain_admin_policy_type: MANAGED
 #      domain_admin_policy_id: policy-0386cce2730b
-#      username: user1@example.com
-#      password: User1234!
-#      aws_cloud_watch_plugin_id: plugin-41782f6158bb
-#      aws_cloud_watch_plugin_version: "1.1"
-#      google_cloud_stackdriver_plugin_id: plugin-57773973639a
-#      google_cloud_stackdriver_plugin_version: "1.0.3"
-#      azure_monitor_plugin_id: plugin-c6c14566298c
-#      azure_monitor_plugin_id_plugin_version: "1.0"
-#      aws_hyperbilling_plugin_id: plugin-aws-hyperbilling-bill-datasource
-#      aws_hyperbilling_version: "1.0.2"
 #
 #    tasks: []
