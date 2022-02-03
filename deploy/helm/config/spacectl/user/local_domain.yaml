@@ -10,6 +10,19 @@ tasks:
         - name
       mode: NO_UPDATE
 
+  - name: Set Default Launguage and Timezone
+    uses: "@modules/resource"
+    spec:
+      resource_type: identity.Domain
+      data:
+        domain_id: ${{ tasks.domain.output.domain_id }}
+        config:
+          LANGUAGE: ko
+          TIMEZONE: Asia/Seoul
+      mode: EXEC
+      verb:
+        exec: update
+
   - name: Create DomainOwner
     id: domain_owner
     uses: "@modules/resource"
@@ -100,16 +113,3 @@ tasks:
     spec:
       run: |
         spacectl list billing.DataSource -p domain_id=${{ tasks.domain.output.domain_id }}
-
-  - name: Set Default Launguage and Timezone
-    uses: "@modules/resource"
-    spec:
-      resource_type: identity.Domain
-      data:
-        domain_id: ${{ tasks.domain.output.domain_id }}
-        config:
-          LANGUAGE: ko
-          TIMEZONE: Asia/Seoul
-      mode: EXEC
-      verb:
-        exec: update
