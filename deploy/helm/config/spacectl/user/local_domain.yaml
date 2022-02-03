@@ -6,22 +6,12 @@ tasks:
       resource_type: identity.Domain
       data:
         name: ${{ var.domain_name }}
-      matches:
-        - name
-      mode: NO_UPDATE
-
-  - name: Set Default Launguage and Timezone
-    uses: "@modules/resource"
-    spec:
-      resource_type: identity.Domain
-      data:
-        domain_id: ${{ tasks.domain.output.domain_id }}
         config:
           LANGUAGE: ko
           TIMEZONE: Asia/Seoul
-      mode: EXEC
-      verb:
-        exec: update
+      matches:
+        - name
+      mode: NO_UPDATE
 
   - name: Create DomainOwner
     id: domain_owner
