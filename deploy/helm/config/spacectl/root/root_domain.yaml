@@ -7,8 +7,8 @@ tasks:
       data:
         name: ${{ var.domain_name }}
         config:
-          LANGUAGE: ko
-          TIMEZONE: Asia/Seoul
+          LANGUAGE: ${{ var.default_language }}
+          TIMEZONE: ${{ var.default_timezone }}
       matches:
         - name
       mode: NO_UPDATE
