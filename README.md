@@ -15,7 +15,7 @@ Root domain is a system domain for over-all user-domain.
 enabled: true
 image:
     name: spaceone/spacectl
-    version: 1.8.4
+    version: 1.9.0
 domain: root
 main:
   import:
@@ -24,6 +24,8 @@ main:
     - /root/spacectl/apply/hyperbilling.yaml # If you have a hyperbilling account
   var:
     domain_name: root
+    default_language: ko
+    default_timezone: Asia/Seoul
     domain_owner:
       id: admin
       password: Adminpassword
@@ -55,12 +57,15 @@ main:
 
   var:
     domain_name: spaceone
+    default_language: ko
+    default_timezone: Asia/Seoul
     domain_owner: admin
     domain_owner_password: Admin123!@#
     project_admin_policy_type: MANAGED
     project_admin_policy_id: policy-0386cce2730b
     domain_admin_policy_type: MANAGED
     domain_admin_policy_id: policy-0386cce2730b
+
 
   tasks: []
 ~~~

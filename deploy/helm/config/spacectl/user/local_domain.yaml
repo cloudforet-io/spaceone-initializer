@@ -6,6 +6,9 @@ tasks:
       resource_type: identity.Domain
       data:
         name: ${{ var.domain_name }}
+        config:
+          LANGUAGE: ${{ var.default_language }}
+          TIMEZONE: ${{ var.default_timezone }}
       matches:
         - name
       mode: NO_UPDATE
