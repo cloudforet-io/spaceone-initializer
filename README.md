@@ -83,6 +83,7 @@ main:
 
 ### Install spaceone-initializer helm chart
 - first, uninstall root-domain if it is installed
+    - if you installed spaceone with minikube.yaml, delete initialize-spaceone pod
 ~~~
 helm uninstall root-domain
 ~~~
