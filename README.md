@@ -21,6 +21,7 @@ main:
   import:
     - /root/spacectl/apply/root_domain.yaml 
     - /root/spacectl/apply/marketplace.yaml
+    - /root/spacectl/apply/role.yaml
     - /root/spacectl/apply/hyperbilling.yaml # If you have a hyperbilling account
   var:
     domain_name: root
