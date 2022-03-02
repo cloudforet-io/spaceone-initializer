@@ -1,0 +1,64 @@
+tasks:
+  - name: Create project admin role
+    id: project_admin_role
+    uses: "@modules/resource"
+    spec:
+      resource_type: identity.Role
+      data:
+        name: Project Admin
+        role_type: PROJECT
+        policies:
+          - policy_type: ${{ var.project_admin_policy_type }}
+            policy_id: ${{ var.project_admin_policy_id }}
+        domain_id: ${{ tasks.domain.output.domain_id }}
+      mode: EXEC
+      verb:
+        exec: create
+
+  - name: Create project viewer role
+    id: project_admin_viewer
+    uses: "@modules/resource"
+    spec:
+      resource_type: identity.Role
+      data:
+        name: Project Viewer
+        role_type: PROJECT
+        policies:
+          - policy_type: ${{ var.project_viewer_policy_type }}
+            policy_id: ${{ var.project_viewer_policy_id }}
+        domain_id: ${{ tasks.domain.output.domain_id }}
+      mode: EXEC
+      verb:
+        exec: create
+
+  - name: Create domain admin role
+    id: domain_admin_role
+    uses: "@modules/resource"
+    spec:
+      resource_type: identity.Role
+      data:
+        name: Domain Admin
+        role_type: DOMAIN
+        policies:
+          - policy_type: ${{ var.domain_admin_policy_type }}
+            policy_id: ${{ var.domain_admin_policy_id }}
+        domain_id: ${{ tasks.domain.output.domain_id }}
+      mode: EXEC
+      verb:
+        exec: create
+
+  - name: Create domain viewer role
+    id: domain_viewer_role
+    uses: "@modules/resource"
+    spec:
+      resource_type: identity.Role
+      data:
+        name: Domain Viewer
+        role_type: DOMAIN
+        policies:
+          - policy_type: ${{ var.domain_viewer_policy_type }}
+            policy_id: ${{ var.domain_viewer_policy_id }}
+        domain_id: ${{ tasks.domain.output.domain_id }}
+      mode: EXEC
+      verb:
+        exec: create
