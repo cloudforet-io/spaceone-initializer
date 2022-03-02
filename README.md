@@ -56,7 +56,7 @@ helm install root-domain -f values.yaml spaceone/spaceone-initializer
 enabled: true
 image:
     name: spaceone/spacectl
-    version: 1.8.4
+    version: 1.9.1
 domain: user
 main:
   import:
