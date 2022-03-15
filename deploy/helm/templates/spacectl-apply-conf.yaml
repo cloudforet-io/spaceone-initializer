@@ -6,18 +6,9 @@ metadata:
   name: spacectl-apply-files-conf
   namespace: {{ .Values.global.namespace | default .Release.Namespace }}
 data:
-{{ if eq .Values.domain "root" }}
-{{ range $path, $_ :=  .Files.Glob  "config/spacectl/root/*.yaml" }}
+{{ range $path, $_ :=  .Files.Glob  "config/spacectl/*.yaml" }}
 {{ $file_name := split "/" $path }}
-  {{ $file_name._3 }}: |
+  {{ $file_name._2 }}: |
 {{ $.Files.Get $path | indent 4 }}
-{{ end }}
-{{ end }}
-{{ if eq .Values.domain "user" }}
-{{ range $path, $_ :=  .Files.Glob  "config/spacectl/user/*.yaml" }}
-{{ $file_name := split "/" $path }}
-  {{ $file_name._3 }}: |
-{{ $.Files.Get $path | indent 4 }}
-{{ end }}
 {{ end }}
 {{ end }}

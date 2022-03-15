@@ -5,7 +5,7 @@ tasks:
     spec:
       resource_type: statistics.Schedule
       data:
-        domain_id: ${{ tasks.domain.output.domain_id }}
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
         topic: daily_cloud_service_summary
         schedule:
           hours:
