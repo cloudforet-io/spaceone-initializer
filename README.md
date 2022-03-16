@@ -21,7 +21,6 @@ main:
     - /root/spacectl/apply/root_domain.yaml
     - /root/spacectl/apply/marketplace.yaml
     - /root/spacectl/apply/role.yaml
-    - /root/spacectl/apply/hyperbilling.yaml # If you have a hyperbilling account
   var:
     domain:
       root: root
@@ -109,7 +108,6 @@ main:
     - /root/spacectl/apply/root_domain.yaml 
     - /root/spacectl/apply/marketplace.yaml
     - /root/spacectl/apply/role.yaml
-    - /root/spacectl/apply/hyperbilling.yaml # If you have a hyperbilling account
     - /root/spacectl/apply/user_domain.yaml
     - /root/spacectl/apply/statistics.yaml
   var:
