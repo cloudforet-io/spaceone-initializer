@@ -1,11 +1,11 @@
 tasks:
   - name: Create Domain
-    id: domain
+    id: user_domain
     uses: "@modules/resource"
     spec:
       resource_type: identity.Domain
       data:
-        name: ${{ var.domain_name }}
+        name: ${{ var.domain.user }}
         config:
           LANGUAGE: ${{ var.default_language }}
           TIMEZONE: ${{ var.default_timezone }}
@@ -14,15 +14,15 @@ tasks:
       mode: NO_UPDATE
 
   - name: Create DomainOwner
-    id: domain_owner
+    id: user_domain_owner
     uses: "@modules/resource"
     spec:
       resource_type: identity.DomainOwner
       data:
         name: Domain Admin
-        owner_id: ${{ var.domain_owner }}
-        password: ${{ var.domain_owner_password }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
+        owner_id: ${{ var.domain_owner.id }}
+        password: ${{ var.domain_owner.password }}
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
       matches:
         - domain_id
       mode: NO_UPDATE
@@ -30,16 +30,16 @@ tasks:
         read: get
 
   - name: Create DomainOwner Token
-    id: domain_owner_token
+    id: user_domain_owner_token
     uses: "@modules/resource"
     spec:
       resource_type: identity.Token
       data:
         user_type: DOMAIN_OWNER
-        user_id: ${{ tasks.domain_owner.spec.data.owner_id }}
+        user_id: ${{ tasks.user_domain_owner.spec.data.owner_id }}
         credentials:
-          password: ${{ tasks.domain_owner.spec.data.password }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
+          password: ${{ tasks.user_domain_owner.spec.data.password }}
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
       mode: EXEC
       verb:
         exec: issue
@@ -49,7 +49,7 @@ tasks:
     uses: "@modules/shell"
     spec:
       run: |
-        spacectl config set api_key ${{ tasks.domain_owner_token.output.access_token }}
+        spacectl config set api_key ${{ tasks.user_domain_owner_token.output.access_token }}
 
   - name: Create project admin role
     id: project_admin_role
@@ -62,7 +62,7 @@ tasks:
         policies:
           - policy_type: MANAGED
             policy_id: ${{ var.project_admin_policy_id }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
       mode: EXEC
       verb:
         exec: create
@@ -78,7 +78,7 @@ tasks:
         policies:
           - policy_type: MANAGED
             policy_id: ${{ var.project_viewer_policy_id }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
       mode: EXEC
       verb:
         exec: create
@@ -94,7 +94,7 @@ tasks:
         policies:
           - policy_type: MANAGED
             policy_id: ${{ var.domain_admin_policy_id }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
       mode: EXEC
       verb:
         exec: create
@@ -110,7 +110,7 @@ tasks:
         policies:
           - policy_type: MANAGED
             policy_id: ${{ var.domain_viewer_policy_id }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
       mode: EXEC
       verb:
         exec: create
@@ -120,18 +120,18 @@ tasks:
     uses: "@modules/shell"
     spec:
       run: |
-        spacectl list notification.Protocol -p domain_id=${{ tasks.domain.output.domain_id }}
+        spacectl list notification.Protocol -p domain_id=${{ tasks.user_domain.output.domain_id }}
         
   - name: List Monitoring DataSource
     id: list_monitoring_datasource
     uses: "@modules/shell"
     spec:
       run: |
-        spacectl list monitoring.DataSource -p domain_id=${{ tasks.domain.output.domain_id }}
+        spacectl list monitoring.DataSource -p domain_id=${{ tasks.user_domain.output.domain_id }}
         
   - name: List Billing DataSource
     id: list_billing_datasource
     uses: "@modules/shell"
     spec:
       run: |
-        spacectl list billing.DataSource -p domain_id=${{ tasks.domain.output.domain_id }}
+        spacectl list billing.DataSource -p domain_id=${{ tasks.user_domain.output.domain_id }}

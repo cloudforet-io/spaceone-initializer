@@ -15,21 +15,20 @@ Root domain is a system domain for over-all user-domain.
 enabled: true
 image:
     name: spaceone/spacectl
-    version: 1.9.1
-domain: root
+    version: 1.9.3
 main:
   import:
-    - /root/spacectl/apply/root_domain.yaml 
+    - /root/spacectl/apply/root_domain.yaml
     - /root/spacectl/apply/marketplace.yaml
     - /root/spacectl/apply/role.yaml
-    - /root/spacectl/apply/hyperbilling.yaml # If you have a hyperbilling account
   var:
-    domain_name: root
+    domain:
+      root: root
     default_language: ko
     default_timezone: Asia/Seoul
     domain_owner:
       id: admin
-      password: Adminpassword
+      password: Admin123!@#
     user:
       id: root_api_key
     consul_server: spaceone-consul-server
@@ -42,6 +41,7 @@ main:
     domain_admin_policy_id: policy-managed-domain-admin
     domain_viewer_policy_type: MANAGED
     domain_viewer_policy_id: policy-managed-domain-viewer
+
   tasks: []
 ~~~
 
@@ -57,19 +57,21 @@ helm install root-domain -f values.yaml spaceone/spaceone-initializer
 enabled: true
 image:
     name: spaceone/spacectl
-    version: 1.9.1
-domain: user
+    version: 1.9.3
 main:
   import:
-    - /root/spacectl/apply/local_domain.yaml
+    - /root/spacectl/apply/user_domain.yaml
     - /root/spacectl/apply/statistics.yaml
-
   var:
-    domain_name: spaceone
+    domain:
+      user: spaceone
     default_language: ko
     default_timezone: Asia/Seoul
-    domain_owner: admin
-    domain_owner_password: Admin123!@#
+    domain_owner:
+      id: admin
+      password: Admin123!@#
+    consul_server: spaceone-consul-server
+    marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
     project_admin_policy_type: MANAGED
     project_admin_policy_id: policy-managed-project-admin
     project_viewer_policy_type: MANAGED
@@ -91,4 +93,49 @@ helm uninstall root-domain
 - then, install user-domain helm chart
 ~~~
 helm install user-domain -f values.yaml spaceone/spaceone-initializer
+~~~
+
+## Root & User Domain
+### Create vaules.yaml
+
+~~~
+enabled: true
+image:
+    name: spaceone/spacectl
+    version: 1.9.3
+main:
+  import:
+    - /root/spacectl/apply/root_domain.yaml 
+    - /root/spacectl/apply/marketplace.yaml
+    - /root/spacectl/apply/role.yaml
+    - /root/spacectl/apply/user_domain.yaml
+    - /root/spacectl/apply/statistics.yaml
+  var:
+    domain:
+      root: root
+      user: spaceone
+    default_language: ko
+    default_timezone: Asia/Seoul
+    domain_owner:
+      id: admin
+      password: Admin123!@#
+    user:
+      id: root_api_key
+    consul_server: spaceone-consul-server
+    marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
+    project_admin_policy_type: MANAGED
+    project_admin_policy_id: policy-managed-project-admin
+    project_viewer_policy_type: MANAGED
+    project_viewer_policy_id: policy-managed-project-viewer
+    domain_admin_policy_type: MANAGED
+    domain_admin_policy_id: policy-managed-domain-admin
+    domain_viewer_policy_type: MANAGED
+    domain_viewer_policy_id: policy-managed-domain-viewer
+
+  tasks: []
+~~~
+
+### Install spaceone-initializer helm chart
+~~~
+helm install root-domain -f values.yaml spaceone/spaceone-initializer
 ~~~
