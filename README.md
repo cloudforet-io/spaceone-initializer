@@ -137,5 +137,5 @@ main:
 
 ### Install spaceone-initializer helm chart
 ~~~
-helm install root-domain -f values.yaml spaceone/spaceone-initializer
+helm install domain -f values.yaml spaceone/spaceone-initializer
 ~~~
