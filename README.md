@@ -1,5 +1,6 @@
 # spaceone-initializer
 
+
 SpaceONE initializer
 
 ## Root Domain
