@@ -6,7 +6,7 @@ SpaceONE initializer
 
 Root domain is a system domain for over-all user-domain.
 
-* providing pluin service
+* providing plugin service
 * providing market-place service
 
 ### Create vaules.yaml
