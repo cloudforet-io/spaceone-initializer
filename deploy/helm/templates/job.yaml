@@ -93,6 +93,9 @@ spec:
       - name: job-2-initialize-spaceone
         image: {{ .Values.image.name }}:{{ .Values.image.version }}
         imagePullPolicy: {{ .Values.imagePullPolicy}}
+        env:
+        - name: SPACECTL_DEBUG
+          value: "true"
         command:
           - sh
           - /root/initialize.sh
