@@ -60,7 +60,7 @@ tasks:
 
   - name: Create System Policy
     id: system_policy
-    uses: "modules/resource"
+    uses: "@modules/resource"
     spec:
       resource_type: identity.Policy
       data:
@@ -74,7 +74,7 @@ tasks:
 
   - name: Create System Role
     id: system_role
-    uses: "modules/resource"
+    uses: "@modules/resource"
     spec:
       resource_type: identity.Role
       data:
@@ -104,7 +104,7 @@ tasks:
 
   - name: System Role Binding
     id: system_role_binding
-    uses: "modules/resource"
+    uses: "@modules/resource"
     spec:
       resource_type: identity.RoleBinding
       data:
