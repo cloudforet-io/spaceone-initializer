@@ -15,7 +15,7 @@ Root domain is a system domain for over-all user-domain.
 enabled: true
 image:
     name: spaceone/spacectl
-    version: 1.9.7
+    version: 1.9.6
 main:
   import:
     - /root/spacectl/apply/root_domain.yaml
@@ -57,7 +57,7 @@ helm install root-domain -f values.yaml spaceone/spaceone-initializer
 enabled: true
 image:
     name: spaceone/spacectl
-    version: 1.9.7
+    version: 1.9.6
 main:
   import:
     - /root/spacectl/apply/user_domain.yaml
@@ -102,7 +102,7 @@ helm install user-domain -f values.yaml spaceone/spaceone-initializer
 enabled: true
 image:
     name: spaceone/spacectl
-    version: 1.9.7
+    version: 1.9.6
 main:
   import:
     - /root/spacectl/apply/root_domain.yaml 

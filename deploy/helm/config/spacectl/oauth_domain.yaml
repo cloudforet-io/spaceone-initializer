@@ -118,7 +118,7 @@ tasks:
 
   - name: Domain Admin Role Binding
     id: domain_admin_role_binding
-    uses: "modules/resource"
+    uses: "@modules/resource"
     spec:
       resource_type: identity.RoleBinding
       data:

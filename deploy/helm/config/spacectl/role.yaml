@@ -11,6 +11,15 @@ tasks:
           - policy_type: ${{ var.project_admin_policy_type }}
             policy_id: ${{ var.project_admin_policy_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
+        page_permissions:
+        - page: project.*
+          permission: MANAGE
+        - page: asset_inventory.*
+          permission: MANAGE
+        - page: cost_explorer.*
+          permission: MANAGE
+        - page: alert_manager.*
+          permission: MANAGE
       mode: EXEC
       verb:
         exec: create
@@ -27,6 +36,15 @@ tasks:
           - policy_type: ${{ var.project_viewer_policy_type }}
             policy_id: ${{ var.project_viewer_policy_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
+        page_permissions:
+        - page: project.*
+          permission: VIEW
+        - page: asset_inventory.*
+          permission: VIEW
+        - page: cost_explorer.*
+          permission: VIEW
+        - page: alert_manager.*
+          permission: VIEW
       mode: EXEC
       verb:
         exec: create
@@ -43,6 +61,9 @@ tasks:
           - policy_type: ${{ var.domain_admin_policy_type }}
             policy_id: ${{ var.domain_admin_policy_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
+        page_permissions: 
+          - page: "*"
+            permission: "MANAGE"
       mode: EXEC
       verb:
         exec: create
@@ -59,6 +80,9 @@ tasks:
           - policy_type: ${{ var.domain_viewer_policy_type }}
             policy_id: ${{ var.domain_viewer_policy_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
+        page_permissions: 
+          - page: "*"
+            permission: "VIEW"
       mode: EXEC
       verb:
         exec: create
