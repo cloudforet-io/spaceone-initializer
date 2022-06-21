@@ -8,8 +8,8 @@ tasks:
         name: Project Admin
         role_type: PROJECT
         policies:
-          - policy_type: ${{ var.project_admin_policy_type }}
-            policy_id: ${{ var.project_admin_policy_id }}
+          - policy_type: MANAGED
+            policy_id: ${{ var.project_manager_policy_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
         page_permissions:
         - page: project.*
@@ -33,7 +33,7 @@ tasks:
         name: Project Viewer
         role_type: PROJECT
         policies:
-          - policy_type: ${{ var.project_viewer_policy_type }}
+          - policy_type: MANAGED
             policy_id: ${{ var.project_viewer_policy_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
         page_permissions:
@@ -58,7 +58,7 @@ tasks:
         name: Domain Admin
         role_type: DOMAIN
         policies:
-          - policy_type: ${{ var.domain_admin_policy_type }}
+          - policy_type: MANAGED
             policy_id: ${{ var.domain_admin_policy_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
         page_permissions: 
@@ -77,7 +77,7 @@ tasks:
         name: Domain Viewer
         role_type: DOMAIN
         policies:
-          - policy_type: ${{ var.domain_viewer_policy_type }}
+          - policy_type: MANAGED
             policy_id: ${{ var.domain_viewer_policy_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
         page_permissions: 
