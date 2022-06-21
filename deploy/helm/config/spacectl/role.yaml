@@ -10,7 +10,7 @@ tasks:
         policies:
           - policy_type: MANAGED
             policy_id: ${{ var.project_manager_policy_id }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
         page_permissions:
         - page: project.*
           permission: MANAGE
@@ -35,7 +35,7 @@ tasks:
         policies:
           - policy_type: MANAGED
             policy_id: ${{ var.project_viewer_policy_id }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
         page_permissions:
         - page: project.*
           permission: VIEW
@@ -60,7 +60,7 @@ tasks:
         policies:
           - policy_type: MANAGED
             policy_id: ${{ var.domain_admin_policy_id }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
         page_permissions: 
           - page: "*"
             permission: "MANAGE"
@@ -79,7 +79,7 @@ tasks:
         policies:
           - policy_type: MANAGED
             policy_id: ${{ var.domain_viewer_policy_id }}
-        domain_id: ${{ tasks.domain.output.domain_id }}
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
         page_permissions: 
           - page: "*"
             permission: "VIEW"
