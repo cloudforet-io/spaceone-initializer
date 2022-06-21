@@ -15,12 +15,11 @@ Root domain is a system domain for over-all user-domain.
 enabled: true
 image:
     name: spaceone/spacectl
-    version: 1.9.6
+    version: 1.9.7.3
 main:
   import:
     - /root/spacectl/apply/root_domain.yaml
     - /root/spacectl/apply/marketplace.yaml
-    - /root/spacectl/apply/role.yaml
   var:
     domain:
       root: root
@@ -33,13 +32,9 @@ main:
       id: root_api_key
     consul_server: spaceone-consul-server
     marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
-    project_admin_policy_type: MANAGED
-    project_admin_policy_id: policy-managed-project-admin
-    project_viewer_policy_type: MANAGED
+    project_manager_policy_id: policy-managed-project-manager
     project_viewer_policy_id: policy-managed-project-viewer
-    domain_admin_policy_type: MANAGED
     domain_admin_policy_id: policy-managed-domain-admin
-    domain_viewer_policy_type: MANAGED
     domain_viewer_policy_id: policy-managed-domain-viewer
 
   tasks: []
@@ -57,10 +52,11 @@ helm install root-domain -f values.yaml spaceone/spaceone-initializer
 enabled: true
 image:
     name: spaceone/spacectl
-    version: 1.9.6
+    version: 1.9.7.3
 main:
   import:
     - /root/spacectl/apply/user_domain.yaml
+    - /root/spacectl/apply/role.yaml
     - /root/spacectl/apply/statistics.yaml
   var:
     domain:
@@ -72,13 +68,9 @@ main:
       password: Admin123!@#
     consul_server: spaceone-consul-server
     marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
-    project_admin_policy_type: MANAGED
-    project_admin_policy_id: policy-managed-project-admin
-    project_viewer_policy_type: MANAGED
+    project_manager_policy_id: policy-managed-project-manager
     project_viewer_policy_id: policy-managed-project-viewer
-    domain_admin_policy_type: MANAGED
     domain_admin_policy_id: policy-managed-domain-admin
-    domain_viewer_policy_type: MANAGED
     domain_viewer_policy_id: policy-managed-domain-viewer
 
   tasks: []
@@ -102,13 +94,13 @@ helm install user-domain -f values.yaml spaceone/spaceone-initializer
 enabled: true
 image:
     name: spaceone/spacectl
-    version: 1.9.6
+    version: 1.9.7.3
 main:
   import:
     - /root/spacectl/apply/root_domain.yaml 
     - /root/spacectl/apply/marketplace.yaml
-    - /root/spacectl/apply/role.yaml
     - /root/spacectl/apply/user_domain.yaml
+    - /root/spacectl/apply/role.yaml
     - /root/spacectl/apply/statistics.yaml
   var:
     domain:
@@ -123,13 +115,9 @@ main:
       id: root_api_key
     consul_server: spaceone-consul-server
     marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
-    project_admin_policy_type: MANAGED
-    project_admin_policy_id: policy-managed-project-admin
-    project_viewer_policy_type: MANAGED
+    project_manager_policy_id: policy-managed-project-manager
     project_viewer_policy_id: policy-managed-project-viewer
-    domain_admin_policy_type: MANAGED
     domain_admin_policy_id: policy-managed-domain-admin
-    domain_viewer_policy_type: MANAGED
     domain_viewer_policy_id: policy-managed-domain-viewer
 
   tasks: []
