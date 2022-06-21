@@ -97,8 +97,8 @@ tasks:
         name: Domain Admin
         role_type: DOMAIN
         policies:
-          - policy_type: MANAGED
-            policy_id: ${{ var.domain_admin_policy_id }}
+          - policy_type: CUSTOM
+            policy_id: ${{ tasks.system_policy.output.policy_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
         page_permissions: 
           - page: "*"
