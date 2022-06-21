@@ -73,7 +73,7 @@ tasks:
         exec: create
 
   - name: Create System Role
-    id: system_role
+    id: root_system_role
     uses: "@modules/resource"
     spec:
       resource_type: identity.Role
@@ -84,6 +84,25 @@ tasks:
           - policy_type: CUSTOM
             policy_id: ${{ tasks.system_policy.output.policy_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
+      mode: EXEC
+      verb:
+        exec: create
+
+  - name: Create Domain Admin Role
+    id: root_domain_admin_role
+    uses: "@modules/resource"
+    spec:
+      resource_type: identity.Role
+      data:
+        name: Domain Admin
+        role_type: DOMAIN
+        policies:
+          - policy_type: MANAGED
+            policy_id: ${{ var.domain_admin_policy_id }}
+        domain_id: ${{ tasks.domain.output.domain_id }}
+        page_permissions: 
+          - page: "*"
+            permission: "MANAGE"
       mode: EXEC
       verb:
         exec: create
@@ -110,7 +129,7 @@ tasks:
       data:
         resource_type: identity.User
         resource_id: ${{ var.user.id }}
-        role_id: ${{ tasks.system_role.output.role_id }}
+        role_id: ${{ tasks.root_system_role.output.role_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
       mode: EXEC
       verb:
