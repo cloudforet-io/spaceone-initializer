@@ -16,7 +16,11 @@ tasks:
           permission: MANAGE
         - page: asset_inventory.*
           permission: MANAGE
-        - page: cost_explorer.*
+        - page: cost_explorer.dashboard
+          permission: VIEW
+        - page: cost_explorer.cost_analysis
+          permission: MANAGE
+        - page: cost_explorer.budget
           permission: MANAGE
         - page: alert_manager.*
           permission: MANAGE
