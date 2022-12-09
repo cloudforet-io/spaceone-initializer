@@ -1,0 +1,5 @@
+tasks:
+  - name: Print Admin API Key
+    uses: "@modules/print"
+    spec:
+      data: ${{ tasks.admin_user_api_key.output.api_key }}
