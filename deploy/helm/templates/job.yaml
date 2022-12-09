@@ -16,6 +16,9 @@ spec:
         helm.stargate.spaceone.dev/service: initialize-spaceone
 {{ include "spaceone.labels" . | indent 8 }}
     spec:
+{{- if .Values.global.serviceAccountName }}
+      serviceAccountName: {{ .Values.global.serviceAccountName }}
+{{- end }}
       restartPolicy: OnFailure
       initContainers:
         - name: job-0-msa-health-check
