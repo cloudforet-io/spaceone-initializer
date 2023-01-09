@@ -64,10 +64,3 @@ tasks:
     spec:
       run: |
         spacectl list monitoring.DataSource -p domain_id=${{ tasks.user_domain.output.domain_id }}
-        
-  - name: List Billing DataSource
-    id: list_billing_datasource
-    uses: "@modules/shell"
-    spec:
-      run: |
-        spacectl list billing.DataSource -p domain_id=${{ tasks.user_domain.output.domain_id }}

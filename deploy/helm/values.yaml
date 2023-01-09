@@ -7,8 +7,43 @@ image:
     version: latest
 imagePullPolicy: IfNotPresent
 
+resources: {}
+#     requests:
+#         memory: "128Mi"
+#         cpu: "25m"
+#     limits:
+#         memory: "256Mi"
+#         cpu: "50m"
+
+initContainers:
+    grpcurl:
+        image:
+            name: networld/grpcurl
+            version: latest
+            imagePullPolicy: IfNotPresent
+        resources: {}
+        #     requests:
+        #         memory: "128Mi"
+        #         cpu: "25m"
+        #     limits:
+        #         memory: "256Mi"
+        #         cpu: "50m"
+    spaceconfig:
+        image:
+            name: busybox
+            version: latest
+            imagePullPolicy: IfNotPresent
+        resources: {}
+        #     requests:
+        #         memory: "128Mi"
+        #         cpu: "25m"
+        #     limits:
+        #         memory: "256Mi"
+        #         cpu: "50m"
+
 global:
   namespace: spaceone
+#   serviceAccountName: <spaceone-admin-sa> # if not set, default will be used.
 
 skip_health_check: false
 
@@ -74,7 +109,6 @@ skip_health_check: false
 
 ###################
 # Root & User Domain
-# For ID/PW login, use user_domain.yaml
 ###################
 
 # main:
@@ -101,5 +135,42 @@ skip_health_check: false
 #     project_viewer_policy_id: policy-managed-project-viewer
 #     domain_admin_policy_id: policy-managed-domain-admin
 #     domain_viewer_policy_id: policy-managed-domain-viewer
+
+#   tasks: []
+
+
+###################
+# Root & User Domain on on-prem environment
+###################
+
+# main:
+#   import:
+#     - /root/spacectl/apply/root_domain_none_consul.yaml
+#     - /root/spacectl/apply/create_local_repository.yaml
+#     - /root/spacectl/apply/user_domain.yaml
+#     - /root/spacectl/apply/create_plugin.yaml
+#     - /root/spacectl/apply/create_policy.yaml
+#     - /root/spacectl/apply/create_schema.yaml
+#     - /root/spacectl/apply/role.yaml
+#     - /root/spacectl/apply/statistics.yaml
+#     - /root/spacectl/apply/print_api_key.yaml
+#   var:
+#     domain:
+#       root: root
+#       user: spaceone
+#     default_language: ko
+#     default_timezone: Asia/Seoul
+#     domain_owner:
+#       id: admin
+#       password: Admin123!@#
+#     user:
+#       id: root_api_key
+#     consul_server: spaceone-consul-server
+#     project_manager_policy_id: policy-managed-project-manager
+#     project_viewer_policy_id: policy-managed-project-viewer
+#     domain_admin_policy_id: policy-managed-domain-admin
+#     domain_viewer_policy_id: policy-managed-domain-viewer
+#     plugin:
+#       image_prefix: spaceone-hbr
 
 #   tasks: []

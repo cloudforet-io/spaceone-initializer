@@ -20,10 +20,20 @@ spec:
       serviceAccountName: {{ .Values.global.serviceAccountName }}
 {{- end }}
       restartPolicy: OnFailure
+{{- if .Values.imagePullSecrets}}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end}}
       initContainers:
         - name: job-0-msa-health-check
-          image: networld/grpcurl
-          imagePullPolicy: IfNotPresent
+          image: {{ .Values.initContainers.grpcurl.image.name }}:{{ .Values.initContainers.grpcurl.image.version }}
+          imagePullPolicy: {{ .Values.initContainers.grpcurl.image.imagePullPolicy }}
+{{- if .Values.initContainers.grpcurl.resources }}
+          resources:
+          {{- toYaml .Values.initContainers.grpcurl.resources | nindent 12 }}
+{{- end }}
           # runs for 15 seconds; echoes job name and timestamp
           command:
             - sh
@@ -74,9 +84,18 @@ spec:
 
                 sleep 1;
               done
+{{- if .Values.global.common_env }}
+          env:
+{{- toYaml .Values.global.common_env | nindent 12 }}
+{{- end }}
+
         - name: job-1-spacectl-conf-writable
-          imagePullPolicy: IfNotPresent
-          image: busybox
+          image: {{ .Values.initContainers.spaceconfig.image.name }}:{{ .Values.initContainers.spaceconfig.image.version }}
+          imagePullPolicy: {{ .Values.initContainers.spaceconfig.image.imagePullPolicy }}
+{{- if .Values.initContainers.spaceconfig.resources }}
+          resources:
+          {{- toYaml .Values.initContainers.spaceconfig.resources | nindent 12 }}
+{{- end }}
           command:
             - sh
             - -c
@@ -91,14 +110,25 @@ spec:
             - mountPath: /root/initializer/spaceconfig/environments/helm-root.yml
               name: spacectl-environment-conf
               subPath: helm-root.yml
+{{- if .Values.global.common_env }}
+          env:
+{{- toYaml .Values.global.common_env | nindent 12 }}
+{{- end }}
 
       containers:
       - name: job-2-initialize-spaceone
         image: {{ .Values.image.name }}:{{ .Values.image.version }}
         imagePullPolicy: {{ .Values.imagePullPolicy}}
+{{- if .Values.resources }}
+        resources:
+        {{- toYaml .Values.resources | nindent 10 }}
+{{- end }}
         env:
         - name: SPACECTL_DEBUG
           value: "true"
+{{- if .Values.global.common_env }}
+{{- toYaml .Values.global.common_env | nindent 8 }}
+{{- end }}
         command:
           - sh
           - /root/initialize.sh

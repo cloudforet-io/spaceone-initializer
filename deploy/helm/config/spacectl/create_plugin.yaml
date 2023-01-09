@@ -1,0 +1,267 @@
+var:
+  plugin_list: 
+  - capability:
+      supported_schema:
+      - aws_access_key
+      - aws_assume_role
+      - aws_assume_role_with_external_id
+    image: plugin-aws-cloud-service-inven-collector
+    labels:
+    - API Gateway
+    - Auto Scaling
+    - CloudFront
+    - CloudTrail
+    - Direct Connect
+    - DynamoDB
+    - DocumentDB
+    - EBS
+    - Security Group
+    - ECR
+    - ECS
+    - EFS
+    - EIP
+    - EKS
+    - ELB
+    - IAM
+    - KMS
+    - Lambda
+    - RDS
+    - Redshift
+    - Route53
+    - S3
+    - Secrets Manager
+    - SNS
+    - SQS
+    - VPC
+    - Cloud Service
+    name: aws-cloud-services-collector
+    provider: aws
+    registry_config: {}
+    registry_type: HARBOR
+    service_type: inventory.Collector
+    tags:
+      description: AWS Cloud Services collector
+      icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-cloudservice.svg # marketplace-endpoint
+      pyengine:plugin_name: aws-cloud-services
+
+  - capability:
+      monitoring_type: METRIC
+      supported_schema:
+      - aws_access_key
+      - aws_assume_role
+      - aws_assume_role_with_external_id
+      use_resource_secret: true
+    image: plugin-aws-cloudwatch-mon-datasource
+    labels:
+    - Monitoring
+    - AWS
+    - CloudWatch
+    name: aws-cloudwatch-datasource
+    provider: aws
+    registry_config: {}
+    registry_type: HARBOR
+    service_type: monitoring.DataSource
+    tags:
+      description: AWS CloudWatch Monitoring Plugin
+      icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-cloudwatch.svg
+      spaceone:plugin_name: aws-cloud-watch
+
+  - capability:
+      supported_schema:
+      - aws_access_key
+      - aws_assume_role
+      - aws_assume_role_with_external_id
+    image: plugin-aws-phd-inven-collector
+    labels:
+    - Personal Health Dashboard
+    name: aws-phd-collector
+    provider: aws
+    registry_config: {}
+    registry_type: HARBOR
+    service_type: inventory.Collector
+    tags:
+      description: AWS Personal Health Dashboard collector
+      icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/cloud-services/aws/AWS-Personal-Health-Dashboard.svg
+      spaceone:plugin_name: aws-phd-inven-collector
+
+  - capability:
+      monitoring_type: LOG
+      supported_schema:
+      - azure_client_secret
+      use_resource_secret: true
+    image: plugin-azure-activity-log-mon-datasource
+    labels:
+    - Monitoring
+    - Azure
+    - ActivityLog
+    name: azure-activity-log-datasource
+    provider: azure
+    registry_config: {}
+    registry_type: HARBOR
+    service_type: monitoring.DataSource
+    tags:
+      description: Azure Activity Monitoring Log Plugin
+      icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/azure-cloud-services.svg
+      spaceone:plugin_name: azure-activity-log
+
+  - capability:
+      monitoring_type: METRIC
+      supported_schema:
+      - azure_client_secret
+      use_resource_secret: true
+    image: plugin-azure-monitor-mon-datasource
+    labels:
+    - Monitoring
+    - Azure
+    - azure-monitor
+    name: azure-monitor-datasource
+    provider: azure
+    registry_config: {}
+    registry_type: HARBOR
+    service_type: monitoring.DataSource
+    tags:
+      description: Azure Monitoring Plugin
+      icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/azure-monitor.svg
+      spaceone:plugin_name: azure-monitor
+
+  - capability:
+      monitoring_type: METRIC
+      supported_schema:
+      - google_oauth2_credentials
+      use_resource_secret: true
+    image: plugin-google-stackdriver-mon-datasource
+    labels:
+    - Monitoring
+    - Google
+    - Stackdriver
+    name: google-stackdriver-datasource
+    provider: google_cloud
+    registry_config: {}
+    registry_type: HARBOR
+    service_type: monitoring.DataSource
+    tags:
+      description: Google Cloud Stackdriver Monitoring Plugin
+      icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/google-cloud-stackdriver.svg
+      spaceone:plugin_name: google-cloud-stackdriver
+
+  - capability:
+      monitoring_type: LOG
+      supported_schema:
+      - aws_access_key
+      - aws_assume_role
+      - aws_assume_role_with_external_id
+      use_resource_secret: true
+    image: plugin-aws-cloudtrail-mon-datasource
+    labels:
+    - Monitoring
+    - AWS
+    - CloudTrail
+    name: aws-cloudtrail-datasource
+    provider: aws
+    registry_config: {}
+    registry_type: HARBOR
+    service_type: monitoring.DataSource
+    tags:
+      description: AWS CloudTrail Monitoring Plugin
+      icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-cloudtrail.svg
+      spaceone:plugin_name: aws-cloud-trail
+
+  - capability:
+      supported_schema:
+      - aws_access_key
+      - aws_assume_role
+      - aws_assume_role_with_external_id
+    image: plugin-aws-ec2-inven-collector
+    labels:
+    - Server
+    name: aws-ec2-collector
+    provider: aws
+    registry_config: {}
+    registry_type: HARBOR
+    service_type: inventory.Collector
+    tags:
+      description: AWS EC2 Compute collector
+      icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-ec2.svg
+      pyengine:plugin_name: aws-ec2
+
+  - capability:
+      supported_schema:
+      - aws_access_key
+      - aws_assume_role
+      - aws_assume_role_with_external_id
+    image: plugin-aws-trusted-advisor-inven-collector
+    labels:
+    - Trusted Advisor
+    name: aws-trusted-advisor-collector
+    provider: aws
+    registry_config: {}
+    registry_type: HARBOR
+    service_type: inventory.Collector
+    tags:
+      description: AWS Trusted Advisor collector
+      icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/aws-trusted-advisor.png
+      pyengine:plugin_name: aws-trusted-advisor
+
+  - capability:
+      supported_schema:
+      - azure_client_secret
+    image: plugin-azure-inven-collector
+    labels:
+    - Cloud Services
+    name: azure-collector
+    provider: azure
+    registry_config: {}
+    registry_type: HARBOR
+    service_type: inventory.Collector
+    tags:
+      description: Azure Cloud Service collector
+      icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/azure-cloud-services.svg
+      spaceone:plugin_name: azure-cloud-services
+
+  - capability:
+      supported_schema:
+      - google_oauth2_credentials
+    image: plugin-google-cloud-inven-collector
+    labels:
+    - VM Instance
+    - Instance Group
+    - Instance Templates
+    - Machine Images
+    - Load balancing
+    - VPC
+    - Route
+    - Firewall
+    - BigQuery
+    - Cloud SQL
+    - Storage
+    name: google-cloud-collector
+    provider: google_cloud
+    registry_config: {}
+    registry_type: HARBOR
+    service_type: inventory.Collector
+    tags:
+      description: Google Cloud collector
+      icon: https://spaceone-custom-assets.s3.ap-northeast-2.amazonaws.com/console-assets/icons/google_cloud.svg
+      spaceone:plugin_name: google-cloud-asset
+
+tasks:
+- name: Create Plugin - ${{ item.name }}
+  id: plugin
+  uses: "@modules/resource"
+  loop: ${{ var.plugin_list|to_data }}
+  spec:
+    resource_type: repository.Plugin
+    data: 
+      name: ${{ item.name }}
+      service_type: ${{ item.service_type }}
+      image: ${{ var.plugin.image_prefix }}/${{ item.image }}
+      registry_type: ${{ item.registry_type }}
+      registry_config: ${{ item.registry_config|to_data }}
+      provider: ${{ item.provider }}
+      capability: ${{ item.capability|to_data }}
+      tags: ${{ item.tags|to_data }}
+      labels: ${{ item.labels|to_data }}
+      domain_id: ${{ tasks.user_domain.output.domain_id }}
+    mode: EXEC
+    verb:
+      exec: register

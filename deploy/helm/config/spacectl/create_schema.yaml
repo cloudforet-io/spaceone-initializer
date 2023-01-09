@@ -1,0 +1,516 @@
+---
+var:
+  schema:
+  - labels:
+    - Alibaba
+    name: alibaba_cloud_access_key_pair
+    schema:
+      properties:
+        ali_access_key_id:
+          minLength: 4.0
+          title: Alibaba Cloud AccessKey ID
+          type: string
+        ali_access_key_secret:
+          minLength: 4.0
+          title: Alibaba Cloud AccessKey Secret
+          type: string
+      required:
+      - ali_access_key_id
+      - ali_access_key_secret
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: Alibaba Cloud AccessKey Pair
+  - labels: []
+    name: atlassian_jira
+    schema:
+      properties:
+        api_token:
+          minLength: 8.0
+          title: API Token
+          type: string
+        email:
+          minLength: 4.0
+          title: Email address of API Token User
+          type: string
+        key:
+          minLength: 2.0
+          title: JIRA Project KEY
+          type: string
+        url:
+          minLength: 9.0
+          title: Atlassian JIRA site URL
+          type: string
+      required:
+      - url
+      - email
+      - api_token
+      - key
+    service_type: secret.credentials
+    tags: {}
+  - labels:
+    - AWS
+    name: aws_access_key
+    schema:
+      order:
+      - aws_access_key_id
+      - aws_secret_access_key
+      properties:
+        aws_access_key_id:
+          format: password
+          minLength: 4.0
+          title: AWS Access Key
+          type: string
+        aws_secret_access_key:
+          format: password
+          minLength: 4.0
+          title: AWS Secret Key
+          type: string
+      required:
+      - aws_access_key_id
+      - aws_secret_access_key
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: AWS Access Key
+  - labels:
+    - AWS
+    - Assume Role
+    name: aws_assume_role
+    schema:
+      order:
+      - external_id
+      - role_arn
+      properties:
+        external_id:
+          format: generate_id
+          markdown: '[How to use an external ID?](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_create_for-user_externalid.html)'
+          minLength: 4.0
+          title: External ID
+          type: string
+        role_arn:
+          minLength: 4.0
+          title: Role ARN
+          type: string
+      required:
+      - role_arn
+      - external_id
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: AWS Assume Role
+  - labels: []
+    name: aws_hyperbilling
+    schema:
+      properties:
+        Account:
+          minLength: 3.0
+          title: Account from Hyperbilling API Credentials
+          type: string
+        Email:
+          minLength: 3.0
+          title: Email from Hyperbilling API Credentials
+          type: string
+        Key:
+          minLength: 8.0
+          title: Key from Hyperbilling API Credentials
+          type: string
+    service_type: billing.DataSource
+    tags: {}
+  - labels:
+    - Azure
+    name: azure_client_secret
+    schema:
+      order:
+      - subscription_id
+      - tenant_id
+      - client_id
+      - client_secret
+      properties:
+        client_id:
+          minLength: 4.0
+          title: Client ID
+          type: string
+        client_secret:
+          minLength: 4.0
+          title: Client Secret
+          type: string
+        subscription_id:
+          minLength: 4.0
+          title: Subscription ID
+          type: string
+        tenant_id:
+          minLength: 4.0
+          title: Tenant ID
+          type: string
+      required:
+      - client_id
+      - client_secret
+      - tenant_id
+      - subscription_id
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: Azure Client Secret
+  - labels: []
+    name: email_smtp
+    schema:
+      properties:
+        password:
+          minLength: 4.0
+          title: SMTP Password
+          type: string
+        smtp_host:
+          minLength: 4.0
+          title: SMTP Host
+          type: string
+        smtp_port:
+          minLength: 2.0
+          title: SMTP Port
+          type: integer
+        user:
+          minLength: 4.0
+          title: SMTP User
+          type: string
+      required:
+      - smtp_host
+      - smtp_port
+      - user
+      - password
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: Email SMTP Auth
+  - labels:
+    - Google Cloud
+    - GCP
+    - OAuth2.0
+    name: google_oauth2_credentials
+    schema:
+      properties:
+        auth_provider_x509_cert_url:
+          default: https://www.googleapis.com/oauth2/v1/certs
+          minLength: 4.0
+          title: Auth Provider X509 Cert URL
+          type: string
+        auth_uri:
+          default: https://acounts.google.com/o/oauth2/auth
+          minLength: 4.0
+          title: Auth URI
+          type: string
+        client_email:
+          minLength: 4.0
+          title: Client Email
+          type: string
+        client_id:
+          minLength: 4.0
+          title: Client ID
+          type: string
+        client_x509_cert_url:
+          minLength: 4.0
+          title: Client X509 Cert URL
+          type: string
+        private_key:
+          minLength: 4.0
+          title: Private Key
+          type: string
+        private_key_id:
+          minLength: 4.0
+          title: Private Key ID
+          type: string
+        project_id:
+          minLength: 4.0
+          title: Project ID
+          type: string
+        token_uri:
+          default: https://oauth2.googleapis.com/token
+          minLength: 4.0
+          title: Token URI
+          type: string
+        type:
+          default: service_account
+          minLength: 4.0
+          title: Type
+          type: string
+      required:
+      - type
+      - project_id
+      - private_key_id
+      - private_key
+      - client_email
+      - client_id
+      - auth_uri
+      - token_uri
+      - auth_provider_x509_cert_url
+      - client_x509_cert_url
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: Google OAuth2 Credentials
+  - labels:
+    - Jenkins
+    name: jenkins_credentials
+    schema:
+      properties:
+        endpoint:
+          minLength: 4.0
+          title: Jenkins Server Endpoint
+          type: string
+        password:
+          minLength: 4.0
+          title: Jenkins Server Password
+          type: string
+        username:
+          minLength: 4.0
+          title: Jenkins Server Username
+          type: string
+      required:
+      - endpoint
+      - username
+      - password
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: Jenkins Credentials
+  - labels: []
+    name: megazone_message_secret
+    schema:
+      properties:
+        access_key:
+          minLength: 4.0
+          title: Megabird Access Key
+          type: string
+      required:
+      - access_key
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: Megabird SMS
+  - labels: []
+    name: megazone_voicecall
+    schema:
+      properties:
+        access_key:
+          minLength: 4.0
+          title: Megazone Voicecall Access Key
+          type: string
+        secret_key:
+          minLength: 4.0
+          title: Megazone Voicecall Secret Key
+          type: string
+      required:
+      - access_key
+      - secret_key
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: Megazone Voicecall
+  - labels: []
+    name: ms_teams_webhook
+    schema:
+      properties:
+        hookurl:
+          minLength: 10.0
+          title: Connector Webhook URL
+          type: string
+      required:
+      - hookurl
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: MS Teams Connector Webhook
+  - labels: []
+    name: mzc_hyperbilling
+    schema:
+      properties:
+        account_id:
+          minLength: 8.0
+          title: Account ID
+          type: string
+        client_email:
+          minLength: 4.0
+          title: Email address of client
+          type: string
+        platform:
+          minLength: 3.0
+          title: Platform String(ex. gcp)
+          type: string
+        private_key:
+          minLength: 9.0
+          title: Private Key String
+          type: string
+      required:
+      - private_key
+      - client_email
+      - account_id
+      - platform
+    service_type: billing.DataSource
+    tags: {}
+  - labels:
+    - Oracle
+    name: oci_api_key
+    schema:
+      properties:
+        fingerprint:
+          minLength: 4.0
+          title: Fingerprint
+          type: string
+        key_content:
+          minLength: 4.0
+          title: Private Key Content
+          type: string
+        tenancy:
+          minLength: 4.0
+          title: Tenancy's OCID
+          type: string
+        user:
+          minLength: 4.0
+          title: User's OCID
+          type: string
+      required:
+      - tenancy
+      - user
+      - key_content
+      - fingerprint
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: Oracle Cloud Infrastructure Access Configuration
+  - labels:
+    - OpenStack
+    name: openstack_credentials
+    schema:
+      properties:
+        all_projects:
+          enum:
+          - 'true'
+          - 'false'
+          examples:
+          - 'true'
+          minLength: 1.0
+          title: All Projects
+          type: string
+        auth_url:
+          minLength: 1.0
+          title: Auth URL
+          type: string
+        dashboard_url:
+          minLength: 1.0
+          title: Dashboard URL
+          type: string
+        identity_api_version:
+          examples:
+          - '3'
+          minLength: 1.0
+          title: Identity API Version
+          type: string
+        interface:
+          examples:
+          - public
+          minLength: 1.0
+          title: API Interface
+          type: string
+        password:
+          minLength: 1.0
+          title: Password
+          type: string
+        project_id:
+          minLength: 1.0
+          title: Project ID
+          type: string
+        region_name:
+          minLength: 1.0
+          title: Region
+          type: string
+        user_domain_name:
+          examples:
+          - Default
+          minLength: 1.0
+          title: Domain
+          type: string
+        username:
+          minLength: 1.0
+          title: Username
+          type: string
+      required:
+      - username
+      - password
+      - region_name
+      - auth_url
+      - project_id
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: OpenStack Credentials
+  - labels: []
+    name: slack_webhook
+    schema:
+      properties:
+        token:
+          minLength: 4.0
+          title: Slack Token
+          type: string
+      required:
+      - token
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: Slack Webhook
+  - labels:
+    - SpaceONE
+    name: spaceone_api_key
+    schema:
+      properties:
+        api_key:
+          minLength: 4.0
+          title: API Key
+          type: string
+        api_key_id:
+          minLength: 4.0
+          title: API Key ID
+          type: string
+        endpoint:
+          minLength: 4.0
+          title: Identity Endpoint
+          type: string
+      required:
+      - api_key
+      - api_key_id
+      - endpoint
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: SpaceONE API Key
+  - labels: []
+    name: telegram_auth_token
+    schema:
+      properties:
+        token:
+          minLength: 10.0
+          title: Telegram Auth Token
+          type: string
+      required:
+      - token
+      - chat_id
+      type: object
+    service_type: secret.credentials
+    tags:
+      description: Telegram Authentication Token
+
+tasks:
+- name: Create Schema - ${{ item.name }}
+  id: schema
+  uses: "@modules/resource"
+  loop: ${{ var.schema|to_data }}
+  spec:
+    resource_type: repository.Schema
+    data: 
+      name: ${{ item.name }}
+      schema: ${{ item.schema|to_data }}
+      tags: ${{ item.tags|to_data }}
+      labels: ${{ item.labels|to_data }}
+      service_type: ${{ item.service_type }}
+      domain_id: ${{ tasks.user_domain.output.domain_id }}
+    mode: EXEC
+    verb:
+      exec: create

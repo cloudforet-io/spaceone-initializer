@@ -1,0 +1,12 @@
+tasks:
+  - name: Create Local Repository
+    id: local_repository
+    uses: "@modules/resource"
+    spec:
+      resource_type: repository.Repository
+      data:
+        name: Local
+        repository_type: local
+      mode: EXEC
+      verb:
+        exec: register
