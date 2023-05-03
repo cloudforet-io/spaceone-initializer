@@ -1,15 +1,51 @@
 tasks:
-  - name: Create project admin role
-    id: project_admin_role
+  - name: Create domain admin role
+    id: domain_admin_role
     uses: "@modules/resource"
     spec:
       resource_type: identity.Role
       data:
-        name: Project Admin
+        name: Domain Admin
+        role_type: DOMAIN
+        policies:
+          - policy_type: MANAGED
+            policy_id: policy-managed-domain-admin
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
+        page_permissions:
+          - page: "*"
+            permission: "MANAGE"
+      mode: EXEC
+      verb:
+        exec: create
+  - name: Create domain viewer role
+    id: domain_viewer_role
+    uses: "@modules/resource"
+    spec:
+      resource_type: identity.Role
+      data:
+        name: Domain Viewer
+        role_type: DOMAIN
+        policies:
+          - policy_type: MANAGED
+            policy_id: policy-managed-domain-viewer
+        domain_id: ${{ tasks.user_domain.output.domain_id }}
+        page_permissions:
+          - page: "*"
+            permission: "VIEW"
+      mode: EXEC
+      verb:
+        exec: create
+  - name: Create project manager role
+    id: project_manager_role
+    uses: "@modules/resource"
+    spec:
+      resource_type: identity.Role
+      data:
+        name: Project Manager
         role_type: PROJECT
         policies:
           - policy_type: MANAGED
-            policy_id: ${{ var.project_manager_policy_id }}
+            policy_id: policy-managed-project-manager
         domain_id: ${{ tasks.user_domain.output.domain_id }}
         page_permissions:
         - page: project.*
@@ -38,7 +74,7 @@ tasks:
         role_type: PROJECT
         policies:
           - policy_type: MANAGED
-            policy_id: ${{ var.project_viewer_policy_id }}
+            policy_id: policy-managed-project-viewer
         domain_id: ${{ tasks.user_domain.output.domain_id }}
         page_permissions:
         - page: project.*
@@ -49,44 +85,6 @@ tasks:
           permission: VIEW
         - page: alert_manager.*
           permission: VIEW
-      mode: EXEC
-      verb:
-        exec: create
-
-  - name: Create domain admin role
-    id: domain_admin_role
-    uses: "@modules/resource"
-    spec:
-      resource_type: identity.Role
-      data:
-        name: Domain Admin
-        role_type: DOMAIN
-        policies:
-          - policy_type: MANAGED
-            policy_id: ${{ var.domain_admin_policy_id }}
-        domain_id: ${{ tasks.user_domain.output.domain_id }}
-        page_permissions: 
-          - page: "*"
-            permission: "MANAGE"
-      mode: EXEC
-      verb:
-        exec: create
-
-  - name: Create domain viewer role
-    id: domain_viewer_role
-    uses: "@modules/resource"
-    spec:
-      resource_type: identity.Role
-      data:
-        name: Domain Viewer
-        role_type: DOMAIN
-        policies:
-          - policy_type: MANAGED
-            policy_id: ${{ var.domain_viewer_policy_id }}
-        domain_id: ${{ tasks.user_domain.output.domain_id }}
-        page_permissions: 
-          - page: "*"
-            permission: "VIEW"
       mode: EXEC
       verb:
         exec: create

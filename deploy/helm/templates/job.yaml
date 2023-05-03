@@ -105,10 +105,10 @@ spec:
               name: writable-spacectl-conf
 
             - mountPath: /root/initializer/spaceconfig/environment.yml
-              name: spacectl-environment-conf
+              name: spacectl-initializer-conf
               subPath: environment.yml
             - mountPath: /root/initializer/spaceconfig/environments/helm-root.yml
-              name: spacectl-environment-conf
+              name: spacectl-initializer-conf
               subPath: helm-root.yml
 {{- if .Values.global.common_env }}
           env:
@@ -149,9 +149,9 @@ spec:
         - name: start-script-conf
           configMap:
             name: start-script-conf
-        - name: spacectl-environment-conf
+        - name: spacectl-initializer-conf
           configMap:
-            name: spacectl-environment-conf
+            name: spacectl-initializer-conf
         - name: writable-spacectl-conf
           emptyDir: {}
         - name: spacectl-apply-files-conf

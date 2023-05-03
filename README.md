@@ -1,107 +1,26 @@
 # spaceone-initializer
 
-SpaceONE initializer
+`spaceone-initializer` helps configure spaceone in various modes.
 
-## Root Domain
+## Default Mode (with Marketplace)
 
-Root domain is a system domain for over-all user-domain.
+Default mode is configured in the following way.
 
-* providing plugin service
-* providing market-place service
+* Create a root domain to manage the SpaceONE cluster
+* Create a user domain for general users.
+* Register Open Source Marketplace (grpc://repository.portal.spaceone.dev:50051)
 
-### Create vaules.yaml
+### Values Examples (values.yaml)
 
 ~~~
-enabled: true
-image:
-    name: spaceone/spacectl
-    version: 1.9.7.3
 main:
   import:
     - /root/spacectl/apply/root_domain.yaml
-    - /root/spacectl/apply/marketplace.yaml
-  var:
-    domain:
-      root: root
-    default_language: ko
-    default_timezone: Asia/Seoul
-    domain_owner:
-      id: admin
-      password: Admin123!@#
-    user:
-      id: root_api_key
-    consul_server: spaceone-consul-server
-    marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
-    project_manager_policy_id: policy-managed-project-manager
-    project_viewer_policy_id: policy-managed-project-viewer
-    domain_admin_policy_id: policy-managed-domain-admin
-    domain_viewer_policy_id: policy-managed-domain-viewer
-
-  tasks: []
-~~~
-
-### Install spaceone-initializer helm chart
-~~~
-helm install root-domain -f values.yaml spaceone/spaceone-initializer
-~~~
-
-## User Domain
-
-### Create vaules.yaml
-~~~
-enabled: true
-image:
-    name: spaceone/spacectl
-    version: 1.9.7.3
-main:
-  import:
+    - /root/spacectl/apply/register_marketplace.yaml
     - /root/spacectl/apply/user_domain.yaml
-    - /root/spacectl/apply/role.yaml
-    - /root/spacectl/apply/statistics.yaml
-  var:
-    domain:
-      user: spaceone
-    default_language: ko
-    default_timezone: Asia/Seoul
-    domain_owner:
-      id: admin
-      password: Admin123!@#
-    consul_server: spaceone-consul-server
-    marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
-    project_manager_policy_id: policy-managed-project-manager
-    project_viewer_policy_id: policy-managed-project-viewer
-    domain_admin_policy_id: policy-managed-domain-admin
-    domain_viewer_policy_id: policy-managed-domain-viewer
-
-  tasks: []
-~~~
-
-### Install spaceone-initializer helm chart
-- first, uninstall root-domain if it is installed
-    - if you installed spaceone with minikube.yaml, delete initialize-spaceone pod
-~~~
-helm uninstall root-domain
-~~~
-- then, install user-domain helm chart
-~~~
-helm install user-domain -f values.yaml spaceone/spaceone-initializer
-~~~
-
-## Root & User Domain
-### Create vaules.yaml
-
-~~~
-enabled: true
-image:
-    name: spaceone/spacectl
-    version: 1.9.7.3
-main:
-  import:
-    - /root/spacectl/apply/root_domain.yaml 
-    - /root/spacectl/apply/marketplace.yaml
-    - /root/spacectl/apply/user_domain.yaml
-    - /root/spacectl/apply/role.yaml
-    - /root/spacectl/apply/statistics.yaml
+    - /root/spacectl/apply/create_role.yaml
+    - /root/spacectl/apply/add_statistics_schedule.yaml
+    - /root/spacectl/apply/print_api_key.yaml
   var:
     domain:
       root: root
@@ -110,20 +29,52 @@ main:
     default_timezone: Asia/Seoul
     domain_owner:
       id: admin
-      password: Admin123!@#
+      password: Admin123!@# // Change your password
     user:
-      id: root_api_key
-    consul_server: spaceone-consul-server
+      id: system_api_key
     marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
-    project_manager_policy_id: policy-managed-project-manager
-    project_viewer_policy_id: policy-managed-project-viewer
-    domain_admin_policy_id: policy-managed-domain-admin
-    domain_viewer_policy_id: policy-managed-domain-viewer
-
-  tasks: []
 ~~~
 
-### Install spaceone-initializer helm chart
+### Run the spaceone-initializer with the following command 
 ~~~
-helm install domain -f values.yaml spaceone/spaceone-initializer
+helm install cloudforet-initializer cloudforet/spaceone-initializer -f values.yaml
 ~~~
+
+## Local Mode (without Marketplace)
+
+Local mode is a configuration for an on-premise environment that cannot connect to the Internet.
+
+* Create a root domain to manage the SpaceONE cluster
+* Create a user domain for general users.
+* Create a local repository
+* Create 4 managed policies
+
+### Values Examples (values.yaml)
+~~~
+main:
+  import:
+    - /root/spacectl/apply/root_domain_none_consul.yaml
+    - /root/spacectl/apply/create_local_repository.yaml
+    - /root/spacectl/apply/user_domain.yaml
+    - /root/spacectl/apply/create_policy.yaml
+    - /root/spacectl/apply/create_role.yaml
+    - /root/spacectl/apply/add_statistics_schedule.yaml
+    - /root/spacectl/apply/print_api_key.yaml
+  var:
+    domain:
+      root: root
+      user: spaceone
+    default_language: ko
+    default_timezone: Asia/Seoul
+    domain_owner:
+      id: admin
+      password: Admin123!@#  // Change your password
+    user:
+      id: system_api_key
+~~~
+
+### Run the spaceone-initializer with the following command
+~~~
+helm install cloudforet-initializer cloudforet/spaceone-initializer -f values.yaml
+~~~
+

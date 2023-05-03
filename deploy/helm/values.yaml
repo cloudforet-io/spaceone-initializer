@@ -1,19 +1,13 @@
 ###############################
-# DEFAULT 
+# DEFAULT
 ###############################
 enabled: true
 image:
     name: spaceone/spacectl
-    version: latest
+    version: 1.11.0.12
 imagePullPolicy: IfNotPresent
 
 resources: {}
-#     requests:
-#         memory: "128Mi"
-#         cpu: "25m"
-#     limits:
-#         memory: "256Mi"
-#         cpu: "50m"
 
 initContainers:
     grpcurl:
@@ -22,24 +16,12 @@ initContainers:
             version: latest
             imagePullPolicy: IfNotPresent
         resources: {}
-        #     requests:
-        #         memory: "128Mi"
-        #         cpu: "25m"
-        #     limits:
-        #         memory: "256Mi"
-        #         cpu: "50m"
     spaceconfig:
         image:
             name: busybox
             version: latest
             imagePullPolicy: IfNotPresent
         resources: {}
-        #     requests:
-        #         memory: "128Mi"
-        #         cpu: "25m"
-        #     limits:
-        #         memory: "256Mi"
-        #         cpu: "50m"
 
 global:
   namespace: spaceone
@@ -49,128 +31,55 @@ skip_health_check: false
 
 #############################################################
 # INFO
-# You can select the domain to be created
+# You can select the mode to be created
 # refer to the example below.
 #############################################################
 
-##########################
-# Root Domain
-##########################
+#########################
+# Default mode (with Marketplace)
+#########################
 
-# main:
-#   import:
-#     - /root/spacectl/apply/root_domain.yaml
-#     - /root/spacectl/apply/marketplace.yaml
-#   var:
-#     domain:
-#       root: root
-#     default_language: ko
-#     default_timezone: Asia/Seoul
-#     domain_owner:
-#       id: admin
-#       password: Admin123!@#
-#     user:
-#       id: root_api_key
-#     consul_server: spaceone-consul-server
-#     marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
-#     project_manager_policy_id: policy-managed-project-manager
-#     project_viewer_policy_id: policy-managed-project-viewer
-#     domain_admin_policy_id: policy-managed-domain-admin
-#     domain_viewer_policy_id: policy-managed-domain-viewer
+main:
+  import:
+    - /root/spacectl/apply/root_domain.yaml
+    - /root/spacectl/apply/register_marketplace.yaml
+    - /root/spacectl/apply/user_domain.yaml
+    - /root/spacectl/apply/create_role.yaml
+    - /root/spacectl/apply/add_statistics_schedule.yaml
+    - /root/spacectl/apply/print_api_key.yaml
+  var:
+    domain:
+      root: root
+      user: spaceone
+    default_language: ko
+    default_timezone: Asia/Seoul
+    domain_owner:
+      id: admin
+      password: Admin123!@#
+    user:
+      id: system_api_key
 
-#   tasks: []
+  #########################
+  # Local mode (Without Marketplace)
+  #########################
 
-###################
-# User Domain
-# For ID/PW login, use user_domain.yaml
-###################
-
-# main:
-#   import:
-#     - /root/spacectl/apply/user_domain.yaml
-#     - /root/spacectl/apply/role.yaml
-#     - /root/spacectl/apply/statistics.yaml
-#   var:
-#     domain:
-#       user: spaceone
-#     default_language: ko
-#     default_timezone: Asia/Seoul
-#     domain_owner:
-#       id: admin
-#       password: Admin123!@#
-#     consul_server: spaceone-consul-server
-#     marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
-#     project_manager_policy_id: policy-managed-project-manager
-#     project_viewer_policy_id: policy-managed-project-viewer
-#     domain_admin_policy_id: policy-managed-domain-admin
-#     domain_viewer_policy_id: policy-managed-domain-viewer
-
-#   tasks: []
-
-###################
-# Root & User Domain
-###################
-
-# main:
-#   import:
-#     - /root/spacectl/apply/root_domain.yaml 
-#     - /root/spacectl/apply/marketplace.yaml
-#     - /root/spacectl/apply/user_domain.yaml
-#     - /root/spacectl/apply/role.yaml
-#     - /root/spacectl/apply/statistics.yaml
-#   var:
-#     domain:
-#       root: root
-#       user: spaceone
-#     default_language: ko
-#     default_timezone: Asia/Seoul
-#     domain_owner:
-#       id: admin
-#       password: Admin123!@#
-#     user:
-#       id: root_api_key
-#     consul_server: spaceone-consul-server
-#     marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
-#     project_manager_policy_id: policy-managed-project-manager
-#     project_viewer_policy_id: policy-managed-project-viewer
-#     domain_admin_policy_id: policy-managed-domain-admin
-#     domain_viewer_policy_id: policy-managed-domain-viewer
-
-#   tasks: []
-
-
-###################
-# Root & User Domain on on-prem environment
-###################
-
-# main:
-#   import:
-#     - /root/spacectl/apply/root_domain_none_consul.yaml
-#     - /root/spacectl/apply/create_local_repository.yaml
-#     - /root/spacectl/apply/user_domain.yaml
-#     - /root/spacectl/apply/create_plugin.yaml
-#     - /root/spacectl/apply/create_policy.yaml
-#     - /root/spacectl/apply/create_schema.yaml
-#     - /root/spacectl/apply/role.yaml
-#     - /root/spacectl/apply/statistics.yaml
-#     - /root/spacectl/apply/print_api_key.yaml
-#   var:
-#     domain:
-#       root: root
-#       user: spaceone
-#     default_language: ko
-#     default_timezone: Asia/Seoul
-#     domain_owner:
-#       id: admin
-#       password: Admin123!@#
-#     user:
-#       id: root_api_key
-#     consul_server: spaceone-consul-server
-#     project_manager_policy_id: policy-managed-project-manager
-#     project_viewer_policy_id: policy-managed-project-viewer
-#     domain_admin_policy_id: policy-managed-domain-admin
-#     domain_viewer_policy_id: policy-managed-domain-viewer
-#     plugin:
-#       image_prefix: spaceone-hbr
-
-#   tasks: []
+#  main:
+#    import:
+#      - /root/spacectl/apply/root_domain_none_consul.yaml
+#      - /root/spacectl/apply/create_local_repository.yaml
+#      - /root/spacectl/apply/user_domain.yaml
+#      - /root/spacectl/apply/create_policy.yaml
+#      - /root/spacectl/apply/create_role.yaml
+#      - /root/spacectl/apply/add_statistics_schedule.yaml
+#      - /root/spacectl/apply/print_api_key.yaml
+#    var:
+#      domain:
+#        root: root
+#        user: spaceone
+#      default_language: ko
+#      default_timezone: Asia/Seoul
+#      domain_owner:
+#        id: admin
+#        password: Admin123!@#
+#      user:
+#        id: system_api_key

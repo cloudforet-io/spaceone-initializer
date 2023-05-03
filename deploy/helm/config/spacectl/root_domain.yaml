@@ -100,14 +100,14 @@ tasks:
           - policy_type: CUSTOM
             policy_id: ${{ tasks.system_policy.output.policy_id }}
         domain_id: ${{ tasks.domain.output.domain_id }}
-        page_permissions: 
+        page_permissions:
           - page: "*"
             permission: "MANAGE"
       mode: EXEC
       verb:
         exec: create
 
-  - name: Create admin user
+  - name: Create Admin User
     id: admin_user
     uses: "@modules/resource"
     spec:
@@ -135,7 +135,7 @@ tasks:
       verb:
         exec: create
 
-  - name: Create admin user API(Domain) key
+  - name: Create System User API(Domain) Key
     id: admin_user_api_key
     uses: "@modules/resource"
     spec:
@@ -153,11 +153,3 @@ tasks:
     spec:
       run: |
         spacectl config set api_key ${{ tasks.admin_user_api_key.output.api_key }}
-
-
-  - name: Consul Admin API Key
-    uses: "@modules/shell"
-    spec:
-      run: |
-          curl -X DELETE http://${{ var.consul_server }}:8500/v1/kv/root/api_key/TOKEN;
-          curl -X PUT http://${{ var.consul_server }}:8500/v1/kv/root/api_key/TOKEN -d '${{ tasks.admin_user_api_key.output.api_key }}'
