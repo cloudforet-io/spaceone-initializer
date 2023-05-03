@@ -29,7 +29,7 @@ main:
     default_timezone: Asia/Seoul
     domain_owner:
       id: admin
-      password: Admin123!@# // Change your password
+      password: Admin123!@#         # Change your password
     user:
       id: system_api_key
     marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
@@ -68,7 +68,7 @@ main:
     default_timezone: Asia/Seoul
     domain_owner:
       id: admin
-      password: Admin123!@#  // Change your password
+      password: Admin123!@#         # Change your password
     user:
       id: system_api_key
 ~~~
