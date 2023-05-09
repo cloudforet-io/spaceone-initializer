@@ -10,7 +10,7 @@ Default mode is configured in the following way.
 * Create a user domain for general users.
 * Register Open Source Marketplace (grpc://repository.portal.spaceone.dev:50051)
 
-### Values Examples (values.yaml)
+### Values Examples (initializer.yaml)
 
 ~~~
 main:
@@ -37,7 +37,7 @@ main:
 
 ### Run the spaceone-initializer with the following command 
 ~~~
-helm install cloudforet-initializer cloudforet/spaceone-initializer -f values.yaml
+helm install cloudforet-initializer cloudforet/spaceone-initializer -f initializer.yaml
 ~~~
 
 ## Local Mode (without Marketplace)
@@ -49,7 +49,7 @@ Local mode is a configuration for an on-premise environment that cannot connect 
 * Create a local repository
 * Create 4 managed policies
 
-### Values Examples (values.yaml)
+### Values Examples (initializer.yaml)
 ~~~
 main:
   import:
@@ -75,6 +75,6 @@ main:
 
 ### Run the spaceone-initializer with the following command
 ~~~
-helm install cloudforet-initializer cloudforet/spaceone-initializer -f values.yaml
+helm install cloudforet-initializer cloudforet/spaceone-initializer -f initializer.yaml
 ~~~
 
