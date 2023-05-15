@@ -53,7 +53,7 @@ Local mode is a configuration for an on-premise environment that cannot connect 
 ~~~
 main:
   import:
-    - /root/spacectl/apply/root_domain_none_consul.yaml
+    - /root/spacectl/apply/root_domain.yaml
     - /root/spacectl/apply/create_local_repository.yaml
     - /root/spacectl/apply/user_domain.yaml
     - /root/spacectl/apply/create_policy.yaml
