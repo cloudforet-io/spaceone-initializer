@@ -1,12 +1,12 @@
 tasks:
-  - name: Create Local Repository
-    id: local_repository
+  - name: Create Managed Repository
+    id: managed_repository
     uses: "@modules/resource"
     spec:
       resource_type: repository.Repository
       data:
-        name: Local
-        repository_type: local
+        name: Managed Repository
+        repository_type: managed
       mode: EXEC
       verb:
         exec: register
