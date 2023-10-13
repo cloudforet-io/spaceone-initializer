@@ -3,25 +3,25 @@
 ###############################
 enabled: true
 image:
-    name: spaceone/spacectl
-    version: 1.11.0.12
+  name: cloudforet/spacectl
+  version: 1.12.1
 imagePullPolicy: IfNotPresent
 
-resources: {}
+resources: { }
 
 initContainers:
-    grpcurl:
-        image:
-            name: networld/grpcurl
-            version: latest
-            imagePullPolicy: IfNotPresent
-        resources: {}
-    spaceconfig:
-        image:
-            name: busybox
-            version: latest
-            imagePullPolicy: IfNotPresent
-        resources: {}
+  grpcurl:
+    image:
+      name: networld/grpcurl
+      version: latest
+      imagePullPolicy: IfNotPresent
+    resources: { }
+  spaceconfig:
+    image:
+      name: busybox
+      version: latest
+      imagePullPolicy: IfNotPresent
+    resources: { }
 
 global:
   namespace: spaceone
@@ -36,14 +36,15 @@ skip_health_check: false
 #############################################################
 
 #########################
-# Default mode (with Marketplace)
+# Default: Local mode (Without Marketplace)
 #########################
 
 main:
   import:
-    - /root/spacectl/apply/root_domain.yaml
-    - /root/spacectl/apply/register_marketplace.yaml
+    - /root/spacectl/apply/root_domain_none_consul.yaml
+    - /root/spacectl/apply/create_local_repository.yaml
     - /root/spacectl/apply/user_domain.yaml
+    - /root/spacectl/apply/create_policy.yaml
     - /root/spacectl/apply/create_role.yaml
     - /root/spacectl/apply/add_statistics_schedule.yaml
     - /root/spacectl/apply/print_api_key.yaml
@@ -59,27 +60,26 @@ main:
     user:
       id: system_api_key
 
-  #########################
-  # Local mode (Without Marketplace)
-  #########################
+#########################
+# Marketplace mode (with Marketplace)
+#########################
 
-#  main:
-#    import:
-#      - /root/spacectl/apply/root_domain_none_consul.yaml
-#      - /root/spacectl/apply/create_local_repository.yaml
-#      - /root/spacectl/apply/user_domain.yaml
-#      - /root/spacectl/apply/create_policy.yaml
-#      - /root/spacectl/apply/create_role.yaml
-#      - /root/spacectl/apply/add_statistics_schedule.yaml
-#      - /root/spacectl/apply/print_api_key.yaml
-#    var:
-#      domain:
-#        root: root
-#        user: spaceone
-#      default_language: ko
-#      default_timezone: Asia/Seoul
-#      domain_owner:
-#        id: admin
-#        password: Admin123!@#
-#      user:
-#        id: system_api_key
+#main:
+#  import:
+#    - /root/spacectl/apply/root_domain.yaml
+#    - /root/spacectl/apply/register_marketplace.yaml
+#    - /root/spacectl/apply/user_domain.yaml
+#    - /root/spacectl/apply/create_role.yaml
+#    - /root/spacectl/apply/add_statistics_schedule.yaml
+#    - /root/spacectl/apply/print_api_key.yaml
+#  var:
+#    domain:
+#      root: root
+#      user: spaceone
+#    default_language: ko
+#    default_timezone: Asia/Seoul
+#    domain_owner:
+#      id: admin
+#      password: Admin123!@#
+#    user:
+#      id: system_api_key
