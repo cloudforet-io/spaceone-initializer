@@ -10,12 +10,6 @@ imagePullPolicy: IfNotPresent
 resources: { }
 
 initContainers:
-  grpcurl:
-    image:
-      name: networld/grpcurl
-      version: latest
-      imagePullPolicy: IfNotPresent
-    resources: { }
   spaceconfig:
     image:
       name: busybox

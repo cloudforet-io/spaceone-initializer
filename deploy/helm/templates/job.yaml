@@ -27,68 +27,6 @@ spec:
       {{- end }}
 {{- end}}
       initContainers:
-        - name: job-0-msa-health-check
-          image: {{ .Values.initContainers.grpcurl.image.name }}:{{ .Values.initContainers.grpcurl.image.version }}
-          imagePullPolicy: {{ .Values.initContainers.grpcurl.image.imagePullPolicy }}
-{{- if .Values.initContainers.grpcurl.resources }}
-          resources:
-          {{- toYaml .Values.initContainers.grpcurl.resources | nindent 12 }}
-{{- end }}
-          # runs for 15 seconds; echoes job name and timestamp
-          command:
-            - sh
-            - -c
-            - >
-              cp /grpcurl /usr/local/bin/grpcurl;
-              while true;
-              do
-
-{{ if .Values.skip_health_check }}
-                echo "Skip Health Check"
-                break
-{{ end }}
-                echo GRPC HealthCheck for microservices
-
-                ! grpcurl -plaintext config:50051 spaceone.api.core.v1.ServerInfo/get_version;
-                config=$?;
-
-                ! grpcurl -plaintext identity:50051 spaceone.api.core.v1.ServerInfo/get_version;
-                identity=$?;
-
-                ! grpcurl -plaintext inventory:50051 spaceone.api.core.v1.ServerInfo/get_version;
-                inventory=$?;
-
-                ! grpcurl -plaintext monitoring:50051 spaceone.api.core.v1.ServerInfo/get_version;
-                monitoring=$?;
-
-                ! grpcurl -plaintext repository:50051 spaceone.api.core.v1.ServerInfo/get_version;
-                repository=$?;
-
-                ! grpcurl -plaintext plugin:50051 spaceone.api.core.v1.ServerInfo/get_version;
-                plugin=$?;
-
-                ! grpcurl -plaintext secret:50051 spaceone.api.core.v1.ServerInfo/get_version;
-                secret=$?;
-
-                ! grpcurl -plaintext statistics:50051 spaceone.api.core.v1.ServerInfo/get_version;
-                statistics=$?;
-
-                if [[ $(( $config * $identity * $inventory * $monitoring * $repository * $plugin * $secret * $statistics )) -ne 0 ]];
-                then
-                  echo "Success. All microservices are available."
-                  sleep 30
-                  break;
-                else
-                  echo "[Error] Failed to connect some microservices"
-                fi
-
-                sleep 1;
-              done
-{{- if .Values.global.common_env }}
-          env:
-{{- toYaml .Values.global.common_env | nindent 12 }}
-{{- end }}
-
         - name: job-1-spacectl-conf-writable
           image: {{ .Values.initContainers.spaceconfig.image.name }}:{{ .Values.initContainers.spaceconfig.image.version }}
           imagePullPolicy: {{ .Values.initContainers.spaceconfig.image.imagePullPolicy }}
@@ -116,34 +54,34 @@ spec:
 {{- end }}
 
       containers:
-      - name: job-2-initialize-spaceone
-        image: {{ .Values.image.name }}:{{ .Values.image.version }}
-        imagePullPolicy: {{ .Values.imagePullPolicy}}
+        - name: job-2-initialize-spaceone
+          image: {{ .Values.image.name }}:{{ .Values.image.version }}
+          imagePullPolicy: {{ .Values.imagePullPolicy}}
 {{- if .Values.resources }}
-        resources:
+          resources:
         {{- toYaml .Values.resources | nindent 10 }}
 {{- end }}
-        env:
-        - name: SPACECTL_DEBUG
-          value: "true"
+          env:
+            - name: SPACECTL_DEBUG
+              value: "true"
 {{- if .Values.global.common_env }}
 {{- toYaml .Values.global.common_env | nindent 8 }}
 {{- end }}
-        command:
-          - sh
-          - /root/initialize.sh
-        volumeMounts:
-          - mountPath: /root/initialize.sh
-            name: start-script-conf
-            subPath: initialize.sh
+          command:
+            - sh
+            - /root/initialize.sh
+          volumeMounts:
+            - mountPath: /root/initialize.sh
+              name: start-script-conf
+              subPath: initialize.sh
 
-          - mountPath: /root/.spaceone
-            name: writable-spacectl-conf
-          - mountPath: /root/spacectl/apply
-            name: spacectl-apply-files-conf
-          - mountPath: /root/spacectl/main.yaml
-            name: spacectl-main-conf
-            subPath: main.yaml
+            - mountPath: /root/.spaceone
+              name: writable-spacectl-conf
+            - mountPath: /root/spacectl/apply
+              name: spacectl-apply-files-conf
+            - mountPath: /root/spacectl/main.yaml
+              name: spacectl-main-conf
+              subPath: main.yaml
 
       volumes:
         - name: start-script-conf
@@ -153,7 +91,7 @@ spec:
           configMap:
             name: spacectl-initializer-conf
         - name: writable-spacectl-conf
-          emptyDir: {}
+          emptyDir: { }
         - name: spacectl-apply-files-conf
           configMap:
             name: spacectl-apply-files-conf
