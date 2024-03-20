@@ -27,7 +27,7 @@ main:
       root: root
       user: spaceone
     default_language: en
-    default_timezone:
+    default_timezone: utc-0
     domain_owner:
       id: admin
       password: Admin123!@# # Change your password
