@@ -6,12 +6,13 @@
 
 Local mode is a configuration for an on-premise environment that cannot connect to the Internet.
 
-* Create a root domain to manage the SpaceONE cluster
-* Create a user domain for general users.
-* Create a local repository
-* Create 4 managed policies
+- Create a root domain to manage the SpaceONE cluster
+- Create a user domain for general users.
+- Create a local repository
+- Create 4 managed policies
 
 ### Values Examples (initializer.yaml)
+
 ```yaml
 main:
   import:
@@ -25,16 +26,17 @@ main:
     domain:
       root: root
       user: spaceone
-    default_language: ko
-    default_timezone: Asia/Seoul
+    default_language: en
+    default_timezone: utc-0
     domain_owner:
       id: admin
-      password: Admin123!@#         # Change your password
+      password: Admin123!@# # Change your password
     user:
       id: system_api_key
 ```
 
 ### Run the spaceone-initializer with the following command
+
 ```bash
 kubectl create ns spaceone
 ```
@@ -47,9 +49,9 @@ helm install initializer cloudforet/spaceone-initializer -n spaceone -f initiali
 
 Marketplace mode is configured in the following way.
 
-* Create a root domain to manage the SpaceONE cluster
-* Create a user domain for general users.
-* Register Open Source Marketplace (grpc://repository.portal.spaceone.dev:50051)
+- Create a root domain to manage the SpaceONE cluster
+- Create a user domain for general users.
+- Register Open Source Marketplace (grpc://repository.portal.spaceone.dev:50051)
 
 ### Values Examples (initializer.yaml)
 
@@ -70,13 +72,14 @@ main:
     default_timezone: Asia/Seoul
     domain_owner:
       id: admin
-      password: Admin123!@#         # Change your password
+      password: Admin123!@# # Change your password
     user:
       id: system_api_key
     marketplace_endpoint: grpc://repository.portal.spaceone.dev:50051
 ```
 
-### Run the spaceone-initializer with the following command 
+### Run the spaceone-initializer with the following command
+
 ```bash
 kubectl create ns spaceone
 ```
