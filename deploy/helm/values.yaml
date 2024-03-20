@@ -7,7 +7,7 @@ image:
   version: 1.12.1
 imagePullPolicy: IfNotPresent
 
-resources: { }
+resources: {}
 
 initContainers:
   spaceconfig:
@@ -15,7 +15,7 @@ initContainers:
       name: busybox
       version: latest
       imagePullPolicy: IfNotPresent
-    resources: { }
+    resources: {}
 
 global:
   namespace: spaceone
@@ -46,14 +46,13 @@ main:
     domain:
       root: root
       user: spaceone
-    default_language: ko
-    default_timezone: Asia/Seoul
+    default_language: en
+    default_timezone: utc-0
     domain_owner:
       id: admin
       password: Admin123!@#
     user:
       id: system_api_key
-
 #########################
 # Marketplace mode (with Marketplace)
 #########################
